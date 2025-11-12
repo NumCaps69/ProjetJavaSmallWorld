@@ -41,6 +41,7 @@ public class Jeu extends Thread{
 
 
     public void appliquerCoup(Coup coup) {
+
         plateau.deplacerUnite(coup.dep, coup.arr);
     }
 

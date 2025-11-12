@@ -23,8 +23,8 @@ public class Case {
 
 
     public Case(Plateau _plateau) {
-
         plateau = _plateau;
+        biome = null;
     }
 
     public Unites getUnites() {
@@ -34,11 +34,4 @@ public class Case {
     public Biome getBiome() {
         return biome;
     }
-
-    public void setBiome(){
-        biome.randomBiome();
-    }
-
-
-
-   }
+}
