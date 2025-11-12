@@ -12,6 +12,7 @@ public class Case {
     // TODO : ajouter le biome de la case
     protected Unites u;
     protected Plateau plateau;
+    protected Biome biome;
 
 
 
@@ -28,6 +29,14 @@ public class Case {
 
     public Unites getUnites() {
         return u;
+    }
+
+    public Biome getBiome() {
+        return biome;
+    }
+
+    public void setBiome(Biome b){
+        biome = b;
     }
 
 
