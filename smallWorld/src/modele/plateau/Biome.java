@@ -9,7 +9,7 @@ public class Biome {
         type = t;
     }
 
-    public Biome randomBiome(){
+    public void randomBiome(){
         Random r =  new Random();
         int val = r.nextInt(4);
         switch(val){
@@ -28,6 +28,5 @@ public class Biome {
             default:
                 break;
         }
-        return this;
     }
 }
