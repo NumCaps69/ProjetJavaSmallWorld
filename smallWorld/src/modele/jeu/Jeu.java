@@ -1,22 +1,27 @@
 package modele.jeu;
 
 import modele.plateau.Plateau;
+import modele.plateau.Plateau2J;
 
 public class Jeu extends Thread{
     private Plateau plateau;
-    private Joueur j1;
-    private Joueur j2;
+    private final int nb_joueur;
+    private Joueur[] joueurs;
     protected Coup coupRecu;
 
 
 
-    public Jeu() {
-        plateau = new Plateau();
+    public Jeu(int nb_j) {
+        if(nb_j==2){
+            plateau = new Plateau2J();
+        }else{
+            plateau = new Plateau2J();
+        }
         plateau.initialiser();
-
-        j1 = new Joueur(this);
-        j2 = new Joueur(this);
-
+        this.nb_joueur = nb_j;
+        for (int i = 0; i < nb_joueur; i++) {
+            joueurs[i] = new Joueur(this);
+        }
         start();
 
     }
