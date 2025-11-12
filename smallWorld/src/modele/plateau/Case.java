@@ -35,10 +35,6 @@ public class Case {
         return biome;
     }
 
-    public void setBiome(){
-        biome.randomBiome();
-    }
-
 
 
    }

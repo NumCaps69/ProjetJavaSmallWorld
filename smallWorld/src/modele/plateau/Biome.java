@@ -7,24 +7,24 @@ public abstract class Biome {
         plateau = _plateau;
     }
 
-    /*public void randomBiome(){
+    public void randomBiome(){
         Random r =  new Random();
         int val = r.nextInt(4);
         switch(val){
             case 0:
-                type = typeBiome.FORET;
+                Foret f = new Foret(this.plateau);
                 break;
             case 1:
-                type = typeBiome.DESERT;
+                Desert d = new Desert(this.plateau);
                 break;
             case 2:
-                type = typeBiome.MONTAGNE;
+                Mountain m = new Mountain(this.plateau);
                 break;
             case 3:
-                type = typeBiome.PLAINE;
+                Plaine p = new Plaine(this.plateau);
                 break;
             default:
                 break;
         }
-    }*/
+    }
 }
