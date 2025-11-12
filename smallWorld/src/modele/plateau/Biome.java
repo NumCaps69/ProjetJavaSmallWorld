@@ -1,15 +1,13 @@
 package modele.plateau;
 import java.util.Random;
 
-public class Biome {
-    public enum typeBiome{PLAINE,FORET,DESERT,MONTAGNE}
-    public typeBiome type;
-
-    public Biome(typeBiome t){
-        type = t;
+public abstract class Biome {
+    protected Plateau plateau;
+    public Biome(Plateau _plateau){
+        plateau = _plateau;
     }
 
-    public void randomBiome(){
+    /*public void randomBiome(){
         Random r =  new Random();
         int val = r.nextInt(4);
         switch(val){
@@ -28,5 +26,5 @@ public class Biome {
             default:
                 break;
         }
-    }
+    }*/
 }
