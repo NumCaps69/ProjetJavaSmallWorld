@@ -35,9 +35,10 @@ public class Case {
         return biome;
     }
 
-    public void setBiome(Biome b){
-        biome = b;
+    public void setBiome(){
+        biome.randomBiome();
     }
+
 
 
    }

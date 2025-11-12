@@ -37,6 +37,7 @@ public class Plateau extends Observable {
             for (int y = 0; y < SIZE_Y; y++) {
                 grilleCases[x][y] = new Case(this);
                 map.put(grilleCases[x][y], new Point(x, y));
+                grilleCases[x][y].setBiome();
             }
 
         }
