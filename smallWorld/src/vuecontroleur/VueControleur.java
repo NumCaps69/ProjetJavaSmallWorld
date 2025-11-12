@@ -30,6 +30,10 @@ public class VueControleur extends JFrame implements Observer {
     // icones affichées dans la grille
     private Image icoElfes;
     private Image icoDesert;
+    private Image icoPlain;
+    private Image icoMoutain;
+    private Image icoForet;
+
 
     private JComponent grilleIP;
     private Case caseClic1; // mémorisation des cases cliquées
@@ -63,6 +67,9 @@ public class VueControleur extends JFrame implements Observer {
 
         icoElfes = new ImageIcon("./data/units/unit_red.png").getImage();
         icoDesert = new ImageIcon("./data/terrain/desert.png").getImage();
+        icoPlain = new ImageIcon("./data/terrain/plain.png").getImage();
+        icoForet = new ImageIcon("./data/terrain/forest.png").getImage();
+        icoMoutain = new ImageIcon("./data/terrain/moutain.png").getImage();
 
     }
 
