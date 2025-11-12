@@ -23,8 +23,8 @@ public class Case {
 
 
     public Case(Plateau _plateau) {
-
         plateau = _plateau;
+        biome = null;
     }
 
     public Unites getUnites() {
