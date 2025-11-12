@@ -10,6 +10,7 @@ public abstract class Unites {
 
     protected Case c;
     protected Plateau plateau;
+    protected int nombre;
 
     public Unites(Plateau _plateau) {
         plateau = _plateau;

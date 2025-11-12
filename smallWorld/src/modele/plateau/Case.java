@@ -13,11 +13,17 @@ public class Case {
     protected Unites u;
     protected Plateau plateau;
     protected Biome biome;
+    protected int nb_unites;
 
 
 
     public void quitterLaCase() {
-        u = null;
+        if(this.nb_unites > 0) {
+            this.nb_unites--;
+            if(this.nb_unites <= 0) {
+                u = null;
+            }
+        }
     }
 
 
@@ -25,6 +31,8 @@ public class Case {
     public Case(Plateau _plateau) {
 
         plateau = _plateau;
+        nb_unites = 0;
+        u = null;
     }
 
     public Unites getUnites() {
