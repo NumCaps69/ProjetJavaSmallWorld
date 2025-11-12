@@ -6,6 +6,7 @@
 package modele.plateau;
 
 import modele.jeu.Unites;
+import java.util.Random;
 
 public class Case {
 
@@ -14,6 +15,7 @@ public class Case {
     protected Plateau plateau;
     protected Biome biome;
     protected int nb_unites;
+    protected Random rand;
 
 
 
@@ -33,6 +35,11 @@ public class Case {
         plateau = _plateau;
         nb_unites = 0;
         u = null;
+        biome = randomBiome();
+
+
+
+
     }
 
     public Unites getUnites() {
@@ -41,6 +48,12 @@ public class Case {
 
     public Biome getBiome() {
         return biome;
+    }
+
+    public Biome randomBiome() {
+        rand = new Random();
+        Biome [] allBiomes = Biome.values();
+        return allBiomes[rand.nextInt(allBiomes.length)];
     }
 
 

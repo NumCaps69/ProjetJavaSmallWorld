@@ -12,6 +12,7 @@ import modele.jeu.Elfes;
 import modele.jeu.Coup;
 import modele.jeu.Jeu;
 import modele.jeu.Unites;
+import modele.plateau.Biome;
 import modele.plateau.Case;
 import modele.plateau.Plateau;
 
@@ -119,6 +120,21 @@ public class VueControleur extends JFrame implements Observer {
         add(grilleIP);
     }
 
+    private Image getImageBiome(Biome biome) {
+        switch (biome){
+            case PLAIN:
+                return icoPlain;
+            case DESERT:
+                return icoDesert;
+            case FOREST:
+                return icoForet;
+            case MOUNTAIN:
+                return icoMoutain;
+            default:
+                return null;
+        }
+    }
+
     
     /**
      * Il y a une grille du côté du modèle ( jeu.getGrille() ) et une grille du côté de la vue (tabIP)
@@ -129,11 +145,12 @@ public class VueControleur extends JFrame implements Observer {
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
                 // biome par défault, à adapter suivant le modèle
-                tabIP[x][y].setBackground(icoDesert);
+
 
                 tabIP[x][y].setFront(null);
 
                 Case c = plateau.getCases()[x][y];
+                tabIP[x][y].setBackground(getImageBiome(c.getBiome()));
 
                 if (c != null) {
 
