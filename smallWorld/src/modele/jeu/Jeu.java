@@ -51,8 +51,10 @@ public class Jeu extends Thread{
     public void jouerPartie() {
 
         while(true) {
-            Coup c = j1.getCoup();
-            appliquerCoup(c);
+            for(int i = 0; i<nb_joueur; i++) {
+                Coup c = joueurs[i].getCoup();
+                appliquerCoup(c);
+            }
 
         }
 
