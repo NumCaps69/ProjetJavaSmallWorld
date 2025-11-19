@@ -36,10 +36,6 @@ public class Case {
         nb_unites = 0;
         u = null;
         biome = randomBiome();
-
-
-
-
     }
 
     public Unites getUnites() {

@@ -121,18 +121,13 @@ public class VueControleur extends JFrame implements Observer {
     }
 
     private Image getImageBiome(Biome biome) {
-        switch (biome){
-            case PLAIN:
-                return icoPlain;
-            case DESERT:
-                return icoDesert;
-            case FOREST:
-                return icoForet;
-            case MOUNTAIN:
-                return icoMoutain;
-            default:
-                return null;
-        }
+        return switch (biome) {
+            case PLAIN -> icoPlain;
+            case DESERT -> icoDesert;
+            case FOREST -> icoForet;
+            case MOUNTAIN -> icoMoutain;
+            default -> null;
+        };
     }
 
     
@@ -150,7 +145,8 @@ public class VueControleur extends JFrame implements Observer {
                 tabIP[x][y].setFront(null);
 
                 Case c = plateau.getCases()[x][y];
-                tabIP[x][y].setBackground(getImageBiome(c.getBiome()));
+                System.out.print("Biome : " + c.getBiome());
+                tabIP[x][y].setFront(icoMoutain);
 
                 if (c != null) {
 
