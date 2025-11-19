@@ -10,11 +10,11 @@ public abstract class Unites {
 
     protected Case c;
     protected Plateau plateau;
-    protected int nombre;
+    protected int nombre_unite;
 
-    public Unites(Plateau _plateau) {
+    public Unites(Plateau _plateau, int nb_unite) {
         plateau = _plateau;
-
+        nombre_unite = nb_unite;
     }
 
     public void quitterCase() {
@@ -31,6 +31,9 @@ public abstract class Unites {
 
     public Case getCase() {
         return c;
+    }
+    public void setNombreUnite(int n) {
+        this.nombre_unite = n;
     }
 
 
