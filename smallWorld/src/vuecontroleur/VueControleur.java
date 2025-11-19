@@ -66,11 +66,14 @@ public class VueControleur extends JFrame implements Observer {
         //icoElfes = new ImageIcon("./data/res/cat.png").getImage();
         //icoDesert = new ImageIcon("./data/res/desert.png").getImage();
 
-        icoElfes = new ImageIcon("./data/units/unit_red.png").getImage();
-        icoDesert = new ImageIcon("./data/terrain/desert.png").getImage();
-        icoPlain = new ImageIcon("./data/terrain/plain.png").getImage();
-        icoForet = new ImageIcon("./data/terrain/forest.png").getImage();
-        icoMoutain = new ImageIcon("./data/terrain/moutain.png").getImage();
+        icoElfes = new ImageIcon("smallWorld/data/units/unit_red.png").getImage();
+        icoDesert = new ImageIcon("smallWorld/data/terrain/desert.png").getImage();
+        icoPlain = new ImageIcon("smallWorld/data/terrain/plain.png").getImage();
+        icoForet = new ImageIcon("smallWorld/data/terrain/forest.png").getImage();
+        icoMoutain = new ImageIcon("smallWorld/data/terrain/moutain.png").getImage();
+
+        System.out.println("plain = " + icoPlain.getWidth(null) + "x" + icoPlain.getHeight(null));
+        System.out.println("desert = " + icoDesert.getWidth(null) + "x" + icoDesert.getHeight(null));
 
     }
 
@@ -141,20 +144,16 @@ public class VueControleur extends JFrame implements Observer {
             for (int y = 0; y < sizeY; y++) {
                 // biome par défault, à adapter suivant le modèle
 
-
+                Case c = plateau.getCases()[x][y];
+                Image biomeIMG = getImageBiome(c.getBiome());
+                tabIP[x][y].setBack(biomeIMG);
+                System.out.print("Biome : " + c.getBiome());
                 tabIP[x][y].setFront(null);
 
-                Case c = plateau.getCases()[x][y];
-                System.out.print("Biome : " + c.getBiome());
-                tabIP[x][y].setFront(icoMoutain);
+                Unites u = c.getUnites();
 
-                if (c != null) {
-
-                    Unites u = c.getUnites();
-
-                    if (u instanceof Elfes) {
-                            tabIP[x][y].setFront(icoElfes);
-                    }
+                if (u instanceof Elfes) {
+                        tabIP[x][y].setFront(icoElfes);
                 }
 
             }

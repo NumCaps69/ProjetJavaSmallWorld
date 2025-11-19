@@ -7,12 +7,14 @@ public class ImagePanel extends JPanel {
     private Image imgBackground;
     private Image imgFront;
 
-    public void setBackground(Image _imgBackground) {
+    public void setBack(Image _imgBackground) {
         imgBackground = _imgBackground;
+        repaint();
     }
 
     public void setFront(Image _imgFront) {
         imgFront = _imgFront;
+        repaint();
     }
     @Override
     protected void paintComponent(Graphics g) {
