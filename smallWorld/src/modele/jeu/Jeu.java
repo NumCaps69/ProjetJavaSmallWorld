@@ -2,6 +2,7 @@ package modele.jeu;
 
 import modele.plateau.Plateau;
 import modele.plateau.Plateau2J;
+import modele.plateau.Plateau3ou4J;
 
 public class Jeu extends Thread{
     private Plateau plateau;
@@ -15,10 +16,11 @@ public class Jeu extends Thread{
         if(nb_j==2){
             plateau = new Plateau2J();
         }else{
-            plateau = new Plateau2J();
+            plateau = new Plateau3ou4J();
         }
         plateau.initialiser();
         this.nb_joueur = nb_j;
+        this.joueurs = new Joueur[nb_joueur];
         for (int i = 0; i < nb_joueur; i++) {
             joueurs[i] = new Joueur(this);
         }
