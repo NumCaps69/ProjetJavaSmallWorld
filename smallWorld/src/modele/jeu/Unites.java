@@ -35,6 +35,9 @@ public abstract class Unites {
     public void setNombreUnite(int n) {
         this.nombre_unite = n;
     }
+    public int getNombreUnite(){
+        return this.nombre_unite;
+    }
 
 
 

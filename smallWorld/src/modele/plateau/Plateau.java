@@ -44,7 +44,7 @@ public class Plateau extends Observable {
     public void initialiser() {
 
 
-        Elfes c = new Elfes(this);
+        Elfes c = new Elfes(this, 3, 4);
         c.allerSurCase(grilleCases[4][7]);
 
         setChanged();

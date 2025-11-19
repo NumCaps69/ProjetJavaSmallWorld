@@ -147,10 +147,13 @@ public class VueControleur extends JFrame implements Observer {
                 Case c = plateau.getCases()[x][y];
                 Image biomeIMG = getImageBiome(c.getBiome());
                 tabIP[x][y].setBack(biomeIMG);
-                System.out.print("Biome : " + c.getBiome());
+                System.out.print("Biome : " + c.getBiome() + " ");
                 tabIP[x][y].setFront(null);
-
+                System.out.print("\n");
                 Unites u = c.getUnites();
+                if (u != null){
+                    System.out.println(u.getNombreUnite() + " \n");
+                }
 
                 if (u instanceof Elfes) {
                         tabIP[x][y].setFront(icoElfes);
