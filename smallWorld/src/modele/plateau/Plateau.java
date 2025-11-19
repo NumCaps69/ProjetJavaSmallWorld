@@ -8,6 +8,8 @@ package modele.plateau;
 
 import modele.jeu.Elfes;
 import modele.jeu.Gobelin;
+import modele.jeu.Humain;
+import modele.jeu.Nain;
 import modele.jeu.Unites;
 
 import java.awt.Point;
@@ -69,10 +71,9 @@ public class Plateau extends Observable {
     }
 
     public void deplacerUnite(Case c1, Case c2) {
+        //Unites type_unites = c1.getUnites();
         if (c1.u != null) {
-
             c1.u.allerSurCase(c2);
-
         }
 
 

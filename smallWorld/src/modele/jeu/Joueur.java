@@ -2,10 +2,13 @@ package modele.jeu;
 
 public class Joueur {
     private Jeu jeu;
+    //private Unites u;
 
     public Joueur(Jeu _jeu) {
         jeu = _jeu;
     }
+
+
 
     public Coup getCoup() {
 

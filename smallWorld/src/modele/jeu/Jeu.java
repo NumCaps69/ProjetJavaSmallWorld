@@ -3,6 +3,7 @@ package modele.jeu;
 import modele.plateau.Plateau;
 import modele.plateau.Plateau2J;
 import modele.plateau.Plateau3ou4J;
+import modele.plateau.Case;
 
 public class Jeu extends Thread{
     private Plateau plateau;
@@ -47,12 +48,12 @@ public class Jeu extends Thread{
 
     public void appliquerCoup(Coup coup) {
         plateau.deplacerUnite(coup.dep, coup.arr);
-        if (coup.arr.getUnites() != null){ //la case est occupée par une unité
-            attaquerCoup(coup);
-        }
+
     }
 
-    public void attaquerCoup(Coup coup) {}
+    public void attaquerCoup(Case c) {
+    }
+
 
     public void run() {
         jouerPartie();
@@ -69,7 +70,7 @@ public class Jeu extends Thread{
         while(true) {
             retour = Tour();
             for(int i = 0; i<nb_joueur; i++) {
-                Coup c = joueurs[i].getCoup();
+                Coup c = retour.getCoup();
                 appliquerCoup(c);
             }
 
