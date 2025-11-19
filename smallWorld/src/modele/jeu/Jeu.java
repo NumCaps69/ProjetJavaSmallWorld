@@ -16,10 +16,12 @@ public class Jeu extends Thread{
     public Jeu(int nb_j) {
         if(nb_j==2){
             plateau = new Plateau2J();
-        }else{
+            System.out.print("2 Joueurs !! \n");
+            plateau.initialiser();
+        }else {
             plateau = new Plateau3ou4J();
+            plateau.initialiser();
         }
-        plateau.initialiser();
         this.nb_joueur = nb_j;
         this.joueurs = new Joueur[nb_joueur];
         for (int i = 0; i < nb_joueur; i++) {

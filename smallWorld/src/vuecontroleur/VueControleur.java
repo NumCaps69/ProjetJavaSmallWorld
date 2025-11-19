@@ -50,9 +50,11 @@ public class VueControleur extends JFrame implements Observer {
     public VueControleur(Jeu _jeu) {
         jeu = _jeu;
         plateau = jeu.getPlateau();
-        sizeX = plateau.SIZE_X;
-        sizeY = plateau.SIZE_Y;
+        sizeX = plateau.getSizeX();
+        sizeY = plateau.getSizeY();
 
+        System.out.println(sizeX);
+        System.out.println(sizeY);
 
 
         chargerLesIcones();

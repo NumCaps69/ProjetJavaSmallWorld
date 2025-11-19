@@ -22,7 +22,7 @@ public class Plateau extends Observable {
 
 
     private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
-    private Case[][] grilleCases = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
+    protected Case[][] grilleCases = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
     public Plateau() {
         initPlateauVide();
@@ -31,6 +31,14 @@ public class Plateau extends Observable {
     public Case[][] getCases() {
         return grilleCases;
     }
+    public int getSizeX() {
+        return SIZE_X;
+    }
+
+    public int getSizeY() {
+        return SIZE_Y;
+    }
+
 
     private void initPlateauVide() {
         for (int x = 0; x < SIZE_X; x++) {
@@ -49,7 +57,6 @@ public class Plateau extends Observable {
         c.allerSurCase(grilleCases[4][7]);
         Gobelin cG =  new Gobelin(this, 3, 9);
         cG.allerSurCase(grilleCases[4][6]);
-
         setChanged();
         notifyObservers();
 
