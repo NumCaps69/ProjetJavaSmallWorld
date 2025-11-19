@@ -9,6 +9,7 @@ public class Jeu extends Thread{
     private final int nb_joueur;
     private Joueur[] joueurs;
     protected Coup coupRecu;
+    private int indJoueur;
 
 
 
@@ -44,15 +45,27 @@ public class Jeu extends Thread{
 
     public void appliquerCoup(Coup coup) {
         plateau.deplacerUnite(coup.dep, coup.arr);
+        if (coup.arr.getUnites() != null){ //la case est occupée par une unité
+            attaquerCoup(coup);
+        }
     }
+
+    public void attaquerCoup(Coup coup) {}
 
     public void run() {
         jouerPartie();
     }
 
+    private Joueur Tour(){
+        indJoueur = (indJoueur+1) % nb_joueur;
+        return joueurs[indJoueur];
+    }
+
     public void jouerPartie() {
+        Joueur retour = null;
 
         while(true) {
+            retour = Tour();
             for(int i = 0; i<nb_joueur; i++) {
                 Coup c = joueurs[i].getCoup();
                 appliquerCoup(c);
