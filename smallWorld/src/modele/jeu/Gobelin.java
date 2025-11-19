@@ -11,4 +11,8 @@ public class Gobelin extends Unites{
         movement_possible = 5;
         biome_favori = Biome.DESERT;
     }
+    @Override
+    public String getTypeUnite() {
+        return "Gobelin";
+    }
 }

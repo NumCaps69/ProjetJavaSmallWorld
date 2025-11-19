@@ -7,6 +7,7 @@ package modele.plateau;
 
 
 import modele.jeu.Elfes;
+import modele.jeu.Gobelin;
 import modele.jeu.Unites;
 
 import java.awt.Point;
@@ -46,6 +47,8 @@ public class Plateau extends Observable {
 
         Elfes c = new Elfes(this, 3, 4);
         c.allerSurCase(grilleCases[4][7]);
+        Gobelin cG =  new Gobelin(this, 3, 9);
+        cG.allerSurCase(grilleCases[4][6]);
 
         setChanged();
         notifyObservers();

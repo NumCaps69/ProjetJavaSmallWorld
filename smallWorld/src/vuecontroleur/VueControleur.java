@@ -30,6 +30,9 @@ public class VueControleur extends JFrame implements Observer {
     private static final int pxCase = 100; // nombre de pixel par case
     // icones affichées dans la grille
     private Image icoElfes;
+    private Image icoHumain;
+    private Image icoNain;
+    private Image icoGobelin;
     private Image icoDesert;
     private Image icoPlain;
     private Image icoMoutain;
@@ -67,6 +70,9 @@ public class VueControleur extends JFrame implements Observer {
         //icoDesert = new ImageIcon("./data/res/desert.png").getImage();
 
         icoElfes = new ImageIcon("smallWorld/data/units/unit_red.png").getImage();
+        icoHumain = new ImageIcon("smallWorld/data/units/unit_blue.png").getImage();
+        icoNain = new ImageIcon("smallWorld/data/units/unit_yellow.png").getImage();
+        icoGobelin = new ImageIcon("smallWorld/data/units/unit_green.png").getImage();
         icoDesert = new ImageIcon("smallWorld/data/terrain/desert.png").getImage();
         icoPlain = new ImageIcon("smallWorld/data/terrain/plain.png").getImage();
         icoForet = new ImageIcon("smallWorld/data/terrain/forest.png").getImage();
@@ -153,11 +159,21 @@ public class VueControleur extends JFrame implements Observer {
                 Unites u = c.getUnites();
                 if (u != null){
                     System.out.println(u.getNombreUnite() + " \n");
+                    tabIP[x][y].setTexte(u.getNombreUnite() + "");
+                }
+                else{
+                    tabIP[x][y].setTexte("");
                 }
 
-                if (u instanceof Elfes) {
-                        tabIP[x][y].setFront(icoElfes);
+                if (u != null) {
+                    switch (u.getTypeUnite()) {
+                        case "Elfes" -> tabIP[x][y].setFront(icoElfes);
+                        case "Humain" -> tabIP[x][y].setFront(icoHumain);
+                        case "Nain" -> tabIP[x][y].setFront(icoNain);
+                        case "Gobelin" -> tabIP[x][y].setFront(icoGobelin);
+                    }
                 }
+
 
             }
         }

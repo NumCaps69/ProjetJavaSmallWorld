@@ -11,4 +11,8 @@ public class Nain extends Unites{
         movement_possible = 4;
         biome_favori = Biome.MOUNTAIN;
     }
+    @Override
+    public String getTypeUnite() {
+        return "Nain";
+    }
 }

@@ -14,6 +14,10 @@ public class Humain extends Unites {
         // alors faudra y complexifier si besoin....
         biome_favori = Biome.PLAIN;
     }
+    @Override
+    public String getTypeUnite() {
+        return "Humain";
+    }
 
 
 }

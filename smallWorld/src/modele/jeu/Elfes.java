@@ -11,6 +11,10 @@ public class Elfes extends Unites {
         movement_possible = 1;
         biome_favori = Biome.FOREST;
     }
+    @Override
+    public String getTypeUnite() {
+        return "Elfes";
+    }
 
 
 }

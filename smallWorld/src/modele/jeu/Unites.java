@@ -38,6 +38,7 @@ public abstract class Unites {
     public int getNombreUnite(){
         return this.nombre_unite;
     }
+    public abstract String getTypeUnite();
 
 
 
