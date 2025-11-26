@@ -48,6 +48,11 @@ public class Plateau3ou4J extends Plateau {
     }
 
     @Override
+    public void deplacerUnite(Case c1, Case c2) {
+        super.deplacerUnite(c1, c2);
+    }
+
+    @Override
     public void initialiser() {
         System.out.println("initialisation du plateau lancée en mode 3 ou 4J");
         int x_max = _longueur;

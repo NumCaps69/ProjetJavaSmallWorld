@@ -71,7 +71,7 @@ public class Plateau extends Observable {
     }
 
     public void deplacerUnite(Case c1, Case c2) {
-        Unites unit = c1.getUnites();
+        Unites unit = c1.u;
         c1.nb_unites = unit.getNombreUnite();
         int d = dist(c1, c2);
         if(d<= unit.getMovement_possible()){
