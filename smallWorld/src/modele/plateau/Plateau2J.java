@@ -50,32 +50,38 @@ public class Plateau2J extends Plateau{
         int x_max = _longueur;
         int y_maxj1 = _largeur/2;
         int y_maxj2 = _largeur;
-        int max_unite_per_case = 3;
+        int max_unite_per_all = 8;
         int unite_pose = 0;
-        while(unite_pose < max_unite_per_case){//dans le cas où on a pas le nb a poser requis...
+        while(unite_pose < max_unite_per_all){//dans le cas où on a pas le nb a poser requis...
             for (int x = 0; x < x_max; x++) {
                 for (int y = 0; y < y_maxj1; y++) {
                     int rand = new Random().nextInt(2);
-                    if(rand == 0 && unite_pose < max_unite_per_case){
-                        int rand_u = new Random().nextInt(10);
+                    if(rand == 0 && unite_pose < max_unite_per_all){
+                        int rand_u = 0;
+                        do{
+                            rand_u = new Random().nextInt(8);
+                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
                         Elfes e = new Elfes(this, 3, rand_u);
                         e.allerSurCase(grilleCases[x][y]);
-                        unite_pose++;
+                        unite_pose+=rand_u;
                         System.out.println("unite posée J1");
                     }
                 }
             }
         }
         unite_pose = 0;
-        while(unite_pose < max_unite_per_case){
+        while(unite_pose < max_unite_per_all){
             for (int x = x_max/2; x < x_max; x++) {
                 for (int y = y_maxj1; y < y_maxj2; y++) {
                     int rand = new Random().nextInt(2);
-                    if(rand == 0 && unite_pose < max_unite_per_case){
-                        int rand_u = new Random().nextInt(10);
+                    if(rand == 0 && unite_pose < max_unite_per_all){
+                        int rand_u = 0;
+                        do{
+                            rand_u = new Random().nextInt(8);
+                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
                         Gobelin g = new Gobelin(this, 3, rand_u);
                         g.allerSurCase(grilleCases[x][y]);
-                        unite_pose++;
+                        unite_pose+=rand_u;
                     }
                 }
             }

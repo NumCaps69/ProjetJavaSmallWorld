@@ -45,7 +45,7 @@ public class Plateau3ou4J extends Plateau {
 
     @Override
     public void initialiser() {
-        System.out.println("initialisation du plateau lancée en mode 4J");
+        System.out.println("initialisation du plateau lancée en mode 3 ou 4J");
         int x_max = _longueur;
         int y_max = _largeur;
         // xmin j1 et j2 c'est 0 et leur max c'est le min de j3 et j4
@@ -54,18 +54,21 @@ public class Plateau3ou4J extends Plateau {
         // ymin de j1 et j4 c'est 0 et leur max c'est le min de j2 et j3
         int y_minj3 = y_max / 2;
         int y_minj2 = y_minj3;
-        int max_unite_per_case = 3;
+        int max_unite_per_all = 8;
         int unite_pose = 0;
         //J1
-        while (unite_pose < max_unite_per_case) {//dans le cas où on a pas le nb a poser requis...
+        while (unite_pose < max_unite_per_all) {//dans le cas où on a pas le nb a poser requis...
             for (int x = 0; x < x_minj3; x++) {
                 for (int y = 0; y < y_minj2; y++) {
                     int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_case) {
-                        int rand_u = new Random().nextInt(10);
+                    if (rand == 0 && unite_pose < max_unite_per_all) {
+                        int rand_u = 0;
+                        do{
+                            rand_u = new Random().nextInt(8);
+                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
                         Elfes e = new Elfes(this, 3, rand_u);
                         e.allerSurCase(grilleCases[x][y]);
-                        unite_pose++;
+                        unite_pose+=rand_u;
                         System.out.println("unite posée J1");
                     }
                 }
@@ -73,45 +76,54 @@ public class Plateau3ou4J extends Plateau {
         }
         //j2
         unite_pose = 0;
-        while (unite_pose < max_unite_per_case) {
+        while (unite_pose < max_unite_per_all) {
             for (int x = 0; x < x_minj3; x++) {
                 for (int y = y_minj2+1; y < y_max; y++) {
                     int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_case) {
-                        int rand_u = new Random().nextInt(10);
+                    if (rand == 0 && unite_pose < max_unite_per_all) {
+                        int rand_u = 0;
+                        do{
+                            rand_u = new Random().nextInt(8);
+                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
                         Gobelin g = new Gobelin(this, 3, rand_u);
                         g.allerSurCase(grilleCases[x][y]);
-                        unite_pose++;
+                        unite_pose+=rand_u;
                     }
                 }
             }
         }
         //j3
         unite_pose = 0;
-        while (unite_pose < max_unite_per_case) {
+        while (unite_pose < max_unite_per_all) {
             for (int x = x_minj3+1; x < x_max; x++) {
                 for (int y = y_minj3+1; y < y_max; y++) {
                     int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_case) {
-                        int rand_u = new Random().nextInt(10);
+                    if (rand == 0 && unite_pose < max_unite_per_all) {
+                        int rand_u = 0;
+                        do{
+                            rand_u = new Random().nextInt(8);
+                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
                         Humain h = new Humain(this, 3, rand_u);
                         h.allerSurCase(grilleCases[x][y]);
-                        unite_pose++;
+                        unite_pose+=rand_u;
                     }
                 }
             }
         }
         //j4
         unite_pose = 0;
-        while (unite_pose < max_unite_per_case) {
+        while (unite_pose < max_unite_per_all) {
             for (int x = x_minj4+1; x < x_max; x++) {
                 for (int y = 0; y < y_minj3; y++) {
                     int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_case) {
-                        int rand_u = new Random().nextInt(10);
+                    if (rand == 0 && unite_pose < max_unite_per_all) {
+                        int rand_u = 0;
+                        do{
+                            rand_u = new Random().nextInt(8);
+                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
                         Nain n = new Nain(this, 3, rand_u);
                         n.allerSurCase(grilleCases[x][y]);
-                        unite_pose++;
+                        unite_pose+=rand_u;
                     }
                 }
             }
