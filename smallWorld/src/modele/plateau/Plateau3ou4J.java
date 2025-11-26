@@ -47,10 +47,6 @@ public class Plateau3ou4J extends Plateau {
         return _largeur;
     }
 
-    @Override
-    public void deplacerUnite(Case c1, Case c2) {
-        super.deplacerUnite(c1, c2);
-    }
 
     @Override
     public void initialiser() {
