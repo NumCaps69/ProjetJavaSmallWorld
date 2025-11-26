@@ -37,6 +37,7 @@ public class VueControleur extends JFrame implements Observer {
     private Image icoPlain;
     private Image icoMoutain;
     private Image icoForet;
+    private Image icoWater;
 
 
     private JComponent grilleIP;
@@ -75,10 +76,11 @@ public class VueControleur extends JFrame implements Observer {
         icoHumain = new ImageIcon("smallWorld/data/units/unit_blue.png").getImage();
         icoNain = new ImageIcon("smallWorld/data/units/unit_yellow.png").getImage();
         icoGobelin = new ImageIcon("smallWorld/data/units/unit_green.png").getImage();
-        icoDesert = new ImageIcon("smallWorld/data/terrain/desert.png").getImage();
-        icoPlain = new ImageIcon("smallWorld/data/terrain/plain.png").getImage();
-        icoForet = new ImageIcon("smallWorld/data/terrain/forest.png").getImage();
-        icoMoutain = new ImageIcon("smallWorld/data/terrain/moutain.png").getImage();
+        icoDesert = new ImageIcon("smallWorld/data/terrain/desert_tile.png").getImage();
+        icoPlain = new ImageIcon("smallWorld/data/terrain/plain_tile.jpeg").getImage();
+        icoForet = new ImageIcon("smallWorld/data/terrain/forest_tile.png").getImage();
+        icoMoutain = new ImageIcon("smallWorld/data/terrain/moutain_tile.jpg").getImage();
+        icoWater = new ImageIcon("smallWorld/data/terrain/water.png").getImage();
 
         System.out.println("plain = " + icoPlain.getWidth(null) + "x" + icoPlain.getHeight(null));
         System.out.println("desert = " + icoDesert.getWidth(null) + "x" + icoDesert.getHeight(null));
@@ -137,6 +139,7 @@ public class VueControleur extends JFrame implements Observer {
             case DESERT -> icoDesert;
             case FOREST -> icoForet;
             case MOUNTAIN -> icoMoutain;
+            case WATER -> icoWater;
             default -> null;
         };
     }

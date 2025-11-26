@@ -13,14 +13,16 @@ public class Plateau2J extends Plateau{
     protected int _longueur ;
     protected int _largeur ;
 
+    protected boolean activer_obs;
     public static final int SIZE_X = 6;
     public static final int SIZE_Y = 6;
     //rajouter unite choisi par chacun quand on aura le time
-    public Plateau2J(){
+    public Plateau2J(boolean activer_obs) {
         super();
         _longueur = 6;
         _largeur = 6;
         grilleCases = new Case[SIZE_X][SIZE_Y];
+        this.activer_obs = activer_obs;
         initPlateauVide();
     }
     @Override

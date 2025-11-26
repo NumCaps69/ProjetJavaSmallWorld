@@ -5,6 +5,7 @@
  */
 package modele.plateau;
 
+import modele.jeu.Obstacle;
 import modele.jeu.Unites;
 import java.util.Random;
 
@@ -16,6 +17,7 @@ public class Case {
     protected Biome biome;
     protected int nb_unites;
     protected Random rand;
+    protected Obstacle o;
 
 
 
@@ -36,10 +38,14 @@ public class Case {
         nb_unites = 0;
         u = null;
         biome = randomBiome();
+        o = null;
     }
 
     public Unites getUnites() {
         return u;
+    }
+    public Obstacle getObstacle(){
+        return o;
     }
 
     public Biome getBiome() {

@@ -15,13 +15,15 @@ public class Plateau3ou4J extends Plateau {
     protected int _largeur;
     protected Case[][] Tab_case;
     protected int nb_joueurs;
+    protected boolean activer_obs;
 
-    public Plateau3ou4J(int nb) {
+    public Plateau3ou4J(int nb, boolean activer_obs) {
         super();
         _longueur = 7;
         _largeur = 7;
         Tab_case = new Case[7][7];
         nb_joueurs = nb;
+        this.activer_obs = activer_obs;
         initPlateauVide();
     }
 
