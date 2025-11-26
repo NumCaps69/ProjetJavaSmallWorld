@@ -5,7 +5,7 @@ import modele.jeu.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Random;
-
+import modele.plateau.Case;
 import modele.plateau.Biome;
 
 public class Plateau3ou4J extends Plateau {

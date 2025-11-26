@@ -162,14 +162,14 @@ public class VueControleur extends JFrame implements Observer {
                 Image biomeIMG = getImageBiome(c.getBiome());
                 tabIP[x][y].setBack(biomeIMG);
                 System.out.print("Biome : " + c.getBiome() + " ");
-                tabIP[x][y].setObstacle(null);
+                tabIP[x][y].setObs(null);
                 tabIP[x][y].setUnit(null);
                 System.out.print("\n");
                 Unites u = c.getUnites();
                 Obstacle o = c.getObstacle();
                 if (o != null) {
                     switch (o.getTypeObstacle()) {
-                        case "Pierre" -> tabIP[x][y].setObstacle(icoStone);
+                        case "Pierre" -> tabIP[x][y].setObs(icoStone);
                         // d'obj a set
                     }
                 }

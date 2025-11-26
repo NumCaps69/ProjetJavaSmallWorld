@@ -7,6 +7,7 @@ package modele.plateau;
 
 import modele.jeu.Obstacle;
 import modele.jeu.Unites;
+import modele.jeu.*;
 
 import java.util.ArrayList;
 import java.util.Random;

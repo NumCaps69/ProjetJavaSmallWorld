@@ -14,7 +14,7 @@ public class ImagePanel extends JPanel {
         repaint();
     }
 
-    public void setObstacle(Image _imgObstacle) {
+    public void setObs(Image _imgObstacle) {
         imgObstacle = _imgObstacle;
         repaint();
     }
