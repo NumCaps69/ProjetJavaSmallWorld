@@ -7,7 +7,10 @@ package modele.plateau;
 
 import modele.jeu.Obstacle;
 import modele.jeu.Unites;
+
+import java.util.ArrayList;
 import java.util.Random;
+
 
 public class Case {
 
@@ -22,12 +25,14 @@ public class Case {
 
 
     public void quitterLaCase() {
+        System.out.println("Appel à la fonction");
         if(this.nb_unites > 0) {
             this.nb_unites--;
             if(this.nb_unites <= 0) {
                 u = null;
             }
         }
+
     }
 
 
@@ -57,7 +62,11 @@ public class Case {
         Biome [] allBiomes = Biome.values();
         return allBiomes[rand.nextInt(allBiomes.length)];
     }
+    /*public void caseAccessible(Case c, int end, ArrayList<Case> l){
+        if(end>0){
+            end -=1;
+            caseAccessible(c.)
+        }*/
+    }
 
 
-
-   }
