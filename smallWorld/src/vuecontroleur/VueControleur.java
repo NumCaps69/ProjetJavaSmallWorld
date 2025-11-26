@@ -8,13 +8,14 @@ import java.util.Observer;
 import javax.swing.*;
 
 
-import modele.jeu.Elfes;
 import modele.jeu.Coup;
 import modele.jeu.Jeu;
 import modele.jeu.Unites;
 import modele.plateau.Biome;
 import modele.plateau.Case;
 import modele.plateau.Plateau;
+import modele.jeu.Obstacle;
+import modele.jeu.Pierre;
 
 
 /** Cette classe a deux fonctions :
@@ -38,6 +39,7 @@ public class VueControleur extends JFrame implements Observer {
     private Image icoMoutain;
     private Image icoForet;
     private Image icoWater;
+    private Image icoStone;
 
 
     private JComponent grilleIP;
@@ -81,6 +83,7 @@ public class VueControleur extends JFrame implements Observer {
         icoForet = new ImageIcon("smallWorld/data/terrain/forest_tile.png").getImage();
         icoMoutain = new ImageIcon("smallWorld/data/terrain/moutain_tile.jpg").getImage();
         icoWater = new ImageIcon("smallWorld/data/terrain/water.png").getImage();
+        icoStone = new ImageIcon("smallWorld/data/obstacles/stone_base.png").getImage();
 
         System.out.println("plain = " + icoPlain.getWidth(null) + "x" + icoPlain.getHeight(null));
         System.out.println("desert = " + icoDesert.getWidth(null) + "x" + icoDesert.getHeight(null));
@@ -159,32 +162,30 @@ public class VueControleur extends JFrame implements Observer {
                 Image biomeIMG = getImageBiome(c.getBiome());
                 tabIP[x][y].setBack(biomeIMG);
                 System.out.print("Biome : " + c.getBiome() + " ");
-                tabIP[x][y].setFront(null);
+                tabIP[x][y].setObstacle(null);
+                tabIP[x][y].setUnit(null);
                 System.out.print("\n");
                 Unites u = c.getUnites();
-                if (u != null){
-                    System.out.println(u.getNombreUnite() + " \n");
-                    tabIP[x][y].setTexte(u.getNombreUnite() + "");
-                }
-                else{
-                    tabIP[x][y].setTexte("");
-                }
-
-                if (u != null) {
-                    switch (u.getTypeUnite()) {
-                        case "Elfes" -> tabIP[x][y].setFront(icoElfes);
-                        case "Humain" -> tabIP[x][y].setFront(icoHumain);
-                        case "Nain" -> tabIP[x][y].setFront(icoNain);
-                        case "Gobelin" -> tabIP[x][y].setFront(icoGobelin);
+                Obstacle o = c.getObstacle();
+                if (o != null) {
+                    switch (o.getTypeObstacle()) {
+                        case "Pierre" -> tabIP[x][y].setObstacle(icoStone);
+                        // d'obj a set
                     }
                 }
+                if (u != null) {
+                    tabIP[x][y].setTexte(u.getNombreUnite() + "");
 
-
+                    switch (u.getTypeUnite()) {
+                        case "Elfes"  -> tabIP[x][y].setUnit(icoElfes);
+                        case "Humain" -> tabIP[x][y].setUnit(icoHumain);
+                        case "Nain"   -> tabIP[x][y].setUnit(icoNain);
+                        case "Gobelin"-> tabIP[x][y].setUnit(icoGobelin);
+                    }
+                }
             }
-        }
         grilleIP.repaint();
-
-
+        }
     }
 
     @Override

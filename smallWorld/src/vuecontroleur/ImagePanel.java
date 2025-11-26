@@ -5,7 +5,8 @@ import java.awt.*;
 
 public class ImagePanel extends JPanel {
     private Image imgBackground;
-    private Image imgFront;
+    private Image imgObstacle;
+    private Image imgUnit;
     private String texte = "";
 
     public void setBack(Image _imgBackground) {
@@ -13,10 +14,19 @@ public class ImagePanel extends JPanel {
         repaint();
     }
 
-    public void setFront(Image _imgFront) {
-        imgFront = _imgFront;
+    public void setObstacle(Image _imgObstacle) {
+        imgObstacle = _imgObstacle;
         repaint();
     }
+
+    public void setUnit(Image _imgUnit) {
+        imgUnit = _imgUnit;
+        repaint();
+    }
+    /*public void setFront(Image _imgFront) {
+        imgFront = _imgFront;
+        repaint();
+    }*/
     public void setTexte(String t) {
         texte = t;
         repaint();
@@ -33,8 +43,20 @@ public class ImagePanel extends JPanel {
             g.drawImage(imgBackground, 2, 2, getWidth()-4, getHeight()-4, this);
         }
 
-        if (imgFront != null) {
-            g.drawImage(imgFront, 10, 10, (int) (getWidth()*0.5), (int) (getHeight()*0.5), this);
+        if (imgObstacle != null) {
+            int w = (int) (getWidth() * 0.7);
+            int h = (int) (getHeight() * 0.7);
+            int x = (getWidth() - w) / 2;
+            int y = (getHeight() - h) / 2;
+            g.drawImage(imgObstacle, x, y, w, h, this);
+        }
+
+        if (imgUnit != null) {
+            int w = (int) (getWidth() * 0.5);
+            int h = (int) (getHeight() * 0.5);
+            int x = (getWidth() - w) / 2;
+            int y = (getHeight() - h) / 2;
+            g.drawImage(imgUnit, x, y, w, h, this);
         }
         Color c = new Color(getBackground().getRGB());
         int r = 255 - c.getRed();

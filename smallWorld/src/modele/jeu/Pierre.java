@@ -16,4 +16,5 @@ public class Pierre extends Obstacle{
         return "Pierre";
     }
 
+
 }

@@ -52,6 +52,9 @@ public class Case {
     public Obstacle getObstacle(){
         return o;
     }
+    public void setObstacle(Obstacle o) {
+        this.o = o;
+    }
 
     public Biome getBiome() {
         return biome;

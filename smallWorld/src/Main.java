@@ -13,7 +13,7 @@ public class Main {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                VueControleur vc = new VueControleur(new Jeu(4, true));
+                VueControleur vc = new VueControleur(new Jeu(4, true, 8, 2));
                 vc.setVisible(true);
             }
         };

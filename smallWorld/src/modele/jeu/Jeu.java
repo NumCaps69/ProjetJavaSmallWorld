@@ -14,13 +14,13 @@ public class Jeu extends Thread{
 
 
 
-    public Jeu(int nb_j, boolean activer_obs) {
+    public Jeu(int nb_j, boolean activer_obs, int max_u, int max_obj) {
         if(nb_j==2){
             plateau = new Plateau2J(activer_obs);
             System.out.print("2 Joueurs !! \n");
             plateau.initialiser();
         }else {
-            plateau = new Plateau3ou4J(nb_j, activer_obs);
+            plateau = new Plateau3ou4J(nb_j, activer_obs, max_u, max_obj);
             plateau.initialiser();
         }
         this.nb_joueur = nb_j;
