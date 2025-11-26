@@ -71,9 +71,16 @@ public class Plateau extends Observable {
     }
 
     public void deplacerUnite(Case c1, Case c2) {
-        //Unites type_unites = c1.getUnites();
-        if (c1.u != null) {
-            c1.u.allerSurCase(c2);
+        Unites unit = c1.getUnites();
+        c1.nb_unites = unit.getNombreUnite();
+        int d = dist(c1, c2);
+        if(d<= unit.getMovement_possible()){
+            System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
+                    + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
+            unit.allerSurCase(c2);
+        }
+        else{
+            System.out.println("Impossible");
         }
 
 
@@ -99,5 +106,11 @@ public class Plateau extends Observable {
         return retour;
     }
 
+    private int dist(Case c1, Case c2) {
+        Point p1 = map.get(c1);
+        Point p2 = map.get(c2);
+        if(c1== null || c2 == null) return 0;
+        return Math.abs(p1.x - p2.x)+Math.abs(p1.y - p2.y);
+    }
 
 }
