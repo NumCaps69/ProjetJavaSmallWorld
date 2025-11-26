@@ -20,7 +20,7 @@ public class Jeu extends Thread{
             System.out.print("2 Joueurs !! \n");
             plateau.initialiser();
         }else {
-            plateau = new Plateau3ou4J();
+            plateau = new Plateau3ou4J(nb_j);
             plateau.initialiser();
         }
         this.nb_joueur = nb_j;

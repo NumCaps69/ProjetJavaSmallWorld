@@ -14,12 +14,14 @@ public class Plateau3ou4J extends Plateau {
     protected int _longueur;
     protected int _largeur;
     protected Case[][] Tab_case;
+    protected int nb_joueurs;
 
-    public Plateau3ou4J() {
+    public Plateau3ou4J(int nb) {
         super();
         _longueur = 7;
         _largeur = 7;
         Tab_case = new Case[7][7];
+        nb_joueurs = nb;
         initPlateauVide();
     }
 
@@ -92,38 +94,62 @@ public class Plateau3ou4J extends Plateau {
                 }
             }
         }
-        //j3
-        unite_pose = 0;
-        while (unite_pose < max_unite_per_all) {
-            for (int x = x_minj3+1; x < x_max; x++) {
-                for (int y = y_minj3+1; y < y_max; y++) {
-                    int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_all) {
-                        int rand_u = 0;
-                        do{
-                            rand_u = new Random().nextInt(8);
-                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
-                        Humain h = new Humain(this, 3, rand_u);
-                        h.allerSurCase(grilleCases[x][y]);
-                        unite_pose+=rand_u;
+        if(nb_joueurs == 3){
+            //j3
+            unite_pose = 0;
+            while (unite_pose < max_unite_per_all) {
+                for (int x = x_minj3; x < x_max; x++) {
+                    for (int y = y_minj3/2; y < y_max-(y_minj3/2); y++) {
+                        int rand = new Random().nextInt(2);
+                        if (rand == 0 && unite_pose < max_unite_per_all) {
+                            int rand_u = 0;
+                            do {
+                                rand_u = new Random().nextInt(8);
+                            } while (rand_u == 0 || rand_u > (max_unite_per_all - unite_pose));
+                            Humain h = new Humain(this, 3, rand_u);
+                            h.allerSurCase(grilleCases[x][y]);
+                            unite_pose += rand_u;
+                        }
                     }
+
                 }
             }
         }
-        //j4
-        unite_pose = 0;
-        while (unite_pose < max_unite_per_all) {
-            for (int x = x_minj4+1; x < x_max; x++) {
-                for (int y = 0; y < y_minj3; y++) {
-                    int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_all) {
-                        int rand_u = 0;
-                        do{
-                            rand_u = new Random().nextInt(8);
-                        }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
-                        Nain n = new Nain(this, 3, rand_u);
-                        n.allerSurCase(grilleCases[x][y]);
-                        unite_pose+=rand_u;
+        else{
+            //j3
+            unite_pose = 0;
+            while (unite_pose < max_unite_per_all) {
+                for (int x = x_minj3+1; x < x_max; x++) {
+                    for (int y = y_minj3 + 1; y < y_max; y++) {
+                        int rand = new Random().nextInt(2);
+                        if (rand == 0 && unite_pose < max_unite_per_all) {
+                            int rand_u = 0;
+                            do {
+                                rand_u = new Random().nextInt(8);
+                            } while (rand_u == 0 || rand_u > (max_unite_per_all - unite_pose));
+                            Humain h = new Humain(this, 3, rand_u);
+                            h.allerSurCase(grilleCases[x][y]);
+                            unite_pose += rand_u;
+                        }
+                    }
+
+                }
+            }
+            //j4
+            unite_pose = 0;
+            while (unite_pose < max_unite_per_all) {
+                for (int x = x_minj4+1; x < x_max; x++) {
+                    for (int y = 0; y < y_minj3; y++) {
+                        int rand = new Random().nextInt(2);
+                        if (rand == 0 && unite_pose < max_unite_per_all) {
+                            int rand_u = 0;
+                            do{
+                                rand_u = new Random().nextInt(8);
+                            }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
+                            Nain n = new Nain(this, 3, rand_u);
+                            n.allerSurCase(grilleCases[x][y]);
+                            unite_pose+=rand_u;
+                        }
                     }
                 }
             }
