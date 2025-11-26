@@ -15,7 +15,7 @@ import modele.jeu.Unites;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Observable;
-
+import java.lang.Math;
 
 public class Plateau extends Observable {
 
@@ -71,7 +71,13 @@ public class Plateau extends Observable {
     }
 
     public void deplacerUnite(Case c1, Case c2) {
-        Unites unit = c1.getUnites();
+        Unites unit = c1.u;
+        Point p1 = map.get(c1);
+        Point p2 = map.get(c2);
+        if (p1.x != p2.x && p1.y != p2.y){ // gère le cas pour les déplacements en diagonale
+            System.out.println("Déplacement impossible");
+            return;
+        }
         c1.nb_unites = unit.getNombreUnite();
         int d = dist(c1, c2);
         if(d<= unit.getMovement_possible()){
@@ -80,7 +86,7 @@ public class Plateau extends Observable {
             unit.allerSurCase(c2);
         }
         else{
-            System.out.println("Impossible");
+            System.out.println("Déplacement impossible");
         }
 
 

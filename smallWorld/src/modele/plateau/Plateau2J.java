@@ -36,6 +36,7 @@ public class Plateau2J extends Plateau{
     }
 
 
+
     private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
     private void initPlateauVide() {
         for (int x = 0; x < _longueur; x++) {

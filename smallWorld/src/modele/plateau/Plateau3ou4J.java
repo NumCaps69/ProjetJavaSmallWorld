@@ -69,6 +69,7 @@ public class Plateau3ou4J extends Plateau {
         return _largeur;
     }
 
+
     @Override
     public void initialiser() {
         System.out.println("initialisation du plateau lancée en mode 3 ou 4J");
