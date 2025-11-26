@@ -49,7 +49,7 @@ public class Plateau2J extends Plateau{
         System.out.println("initialisation du plateau lancée en mode 2J");
         int x_max = _longueur;
         int y_maxj1 = _largeur/2;
-        int y_maxj2 = _longueur;
+        int y_maxj2 = _largeur;
         int max_unite_per_case = 3;
         int unite_pose = 0;
         while(unite_pose < max_unite_per_case){//dans le cas où on a pas le nb a poser requis...
@@ -68,7 +68,7 @@ public class Plateau2J extends Plateau{
         }
         unite_pose = 0;
         while(unite_pose < max_unite_per_case){
-            for (int x = 0; x < x_max; x++) {
+            for (int x = x_max/2; x < x_max; x++) {
                 for (int y = y_maxj1; y < y_maxj2; y++) {
                     int rand = new Random().nextInt(2);
                     if(rand == 0 && unite_pose < max_unite_per_case){
@@ -80,8 +80,6 @@ public class Plateau2J extends Plateau{
                 }
             }
         }
-
-
     }
 }
 
