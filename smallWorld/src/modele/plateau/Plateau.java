@@ -134,16 +134,98 @@ public class Plateau extends Observable {
     }
 
     public void deplacerUnite(Case c1, Case c2) {
-        Unites unit = c1.getUnites();
-        if(peutDeplacer(c1, c2)) {
-            unit.allerSurCase(c2);
-            setChanged();
-            notifyObservers();
+        if (c1 == null || c2 == null) {
+            System.out.println("Deux cases vides...");
+            return;
         }
-        else{
+        Unites unit = c1.getUnites();
+        if (unit == null) {
+            System.out.println("unit vide...");
+            return;
+        }
+        Point p1 = map.get(c1);
+        Point p2 = map.get(c2);
+        if (p1 == null || p2 == null) {
+            System.out.println("Hors plateau...");
+            return;
+        }
+        if (p1.x != p2.x && p1.y != p2.y){ // gère le cas pour les déplacements en diagonale
             System.out.println("Déplacement impossible");
+            return;
+        }
+        c1.nb_unites = unit.getNombreUnite();
+        //int d = dist(c1, c2);
+        int d = calcDist(c1, c2, c1.getUnites().getMovement_possible());
+        if(d == -1){
+            System.out.println("Déplacment impossible : Obstacle sur le chemin");
+            return;
+        }
+        else if (d == 0) {
+
+            System.out.println("Deplacement impossible, reste sur place");
+        } else if(d<= unit.getMovement_possible()){
+
+            System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
+                    + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
+            unit.allerSurCase(c2);
+        } else{
+            System.out.println("Déplacement impossible");
+
         }
 
+
+
+        setChanged();
+        notifyObservers();
+    }
+
+    private int calcDist(Case dep, Case arr, int move_possible){
+        //case null
+        if( dep == arr){
+            return 0;
+        }
+        int [][] Grille = new int[SIZE_X][SIZE_Y];
+        for(int i = 0; i < SIZE_X; i++){
+            for(int j = 0; j < SIZE_Y; j++){
+                Grille[i][j] = -1;
+            }
+        }
+        Point debut = map.get(dep);
+        Grille[debut.x][debut.y] = 0;
+        for(int l = 0; l < move_possible; l++){
+            boolean test = false;
+            for(int m = 0; m < SIZE_X; m++){
+                for(int n = 0; n < SIZE_Y; n++){
+                    if(Grille[m][n] == l){
+                        traiterVoisin(m, n+1, l+1, Grille, arr);
+                        traiterVoisin(m, n-1, l+1, Grille, arr);
+                        traiterVoisin(m+1, n, l+1, Grille, arr);
+                        traiterVoisin(m-1, n, l+1, Grille, arr);
+                        test = true;
+                    }
+                }
+            }
+            if(!test){
+                break;
+            }
+        }
+        Point fin = map.get(arr);
+        return Grille[fin.x][fin.y];
+
+
+    }
+    private void traiterVoisin(int x, int y, int d, int[][] Grille, Case arrivee) {
+        if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y) return;
+        if (Grille[x][y] != -1){
+            return;
+        }
+        Case c = grilleCases[x][y];
+        boolean estBloque = (c.getObstacle() != null && !c.getObstacle().Traversee());
+        if (estBloque) {
+            return;
+        }else{
+            Grille[x][y] = d;
+        }
     }
 
 
