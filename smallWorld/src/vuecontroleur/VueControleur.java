@@ -42,6 +42,7 @@ public class VueControleur extends JFrame implements Observer {
     private Image icoStone;
 
     private JButton btnFINTOUR;
+    private JLabel lblInfoJoueur;
 
 
     private JComponent grilleIP;
@@ -126,11 +127,17 @@ public class VueControleur extends JFrame implements Observer {
 
         tabIP = new ImagePanel[sizeX][sizeY];
 
+        lblInfoJoueur = new JLabel("OK FIRST"); // empeche le null d'apparaitre
+        lblInfoJoueur.setFont(new Font("Arial", Font.BOLD, 24));
+        lblInfoJoueur.setHorizontalAlignment(SwingConstants.CENTER);
+        lblInfoJoueur.setOpaque(true);
+        lblInfoJoueur.setBackground(Color.LIGHT_GRAY);
+        lblInfoJoueur.setPreferredSize(new Dimension(largeur, 40));
+
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
                 ImagePanel iP = new ImagePanel();
                 tabIP[x][y] = iP; // on conserve les cases graphiques dans tabJLabel pour avoir un accès pratique à celles-ci (voir mettreAJourAffichage() )
-
                 final int xx = x; // permet de compiler la classe anonyme ci-dessous
                 final int yy = y;
                 // écouteur de clics
@@ -175,12 +182,14 @@ public class VueControleur extends JFrame implements Observer {
             public void mouseClicked(MouseEvent e) {
                 jeu.envoyerCoup(new Coup(null, null));
                 // reset case clic
+                mettreAJourAffichage();
                 caseClic1 = null;
                 caseClic2 = null;
             }
         });
         JPanel panelPrincipal = new JPanel(new BorderLayout());
         panelPrincipal.add(grilleIP, BorderLayout.CENTER);
+        panelPrincipal.add(lblInfoJoueur, BorderLayout.NORTH);
 
         JPanel panelBouton = new JPanel();
         panelBouton.add(btnFINTOUR);
@@ -200,13 +209,32 @@ public class VueControleur extends JFrame implements Observer {
             default -> null;
         };
     }
+    private String getNomRaceParJoueur(int idJoueur) {
+        return switch (idJoueur) {
+            case 0 -> "Elfes";
+            case 1 -> "Gobelins";
+            case 2 -> "Humains";
+            case 3 -> "Nains";
+            default -> "Inconnu";
+        };
+    }
 
     
     /**
      * Il y a une grille du côté du modèle ( jeu.getGrille() ) et une grille du côté de la vue (tabIP)
      */
     private void mettreAJourAffichage() {
+        int id = jeu.getIndJoueur();
+        String race = getNomRaceParJoueur(id);
+        id+=1;
+        lblInfoJoueur.setText("Tour du Joueur " + id + " : " + race);
 
+        switch(id) {
+            case 1 -> lblInfoJoueur.setForeground(Color.GREEN);
+            case 2 -> lblInfoJoueur.setForeground(Color.RED);
+            case 3 -> lblInfoJoueur.setForeground(Color.BLUE);
+            case 4 -> lblInfoJoueur.setForeground(Color.BLACK);
+        }
 
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
