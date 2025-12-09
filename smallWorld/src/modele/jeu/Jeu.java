@@ -10,7 +10,7 @@ public class Jeu extends Thread{
     private final int nb_joueur;
     private Joueur[] joueurs;
     protected Coup coupRecu;
-    private int indJoueur = -1; //avoir 0 au déb
+    private int indJoueur = 0; //avoir 0 au déb
     private int tour = 1;
     private static int MAXT;
 
@@ -31,6 +31,7 @@ public class Jeu extends Thread{
         for (int i = 0; i < nb_joueur; i++) {
             joueurs[i] = new Joueur(this,i);
         }
+        this.MAXT = MAXT;
         start();
 
     }
@@ -77,6 +78,8 @@ public class Jeu extends Thread{
         while (tour<=MAXT) {
             Joueur joueurActuel = Tour();
             plateau.notifyObservers();
+            System.out.println("--- Début du tour de J" + indJoueur + " ---");
+            System.out.println(("Points du joueur " + indJoueur + " : " + joueurActuel.getScore()));
             boolean finDeTour = false;
 
             while (!finDeTour) {
@@ -92,7 +95,7 @@ public class Jeu extends Thread{
             }
             //Calcul des points
             System.out.println(">> BILAN FIN DE TOUR JOUEUR " + (indJoueur+1));
-            System.out.println("   Trésor avant : " + joueurActuel.getScore());
+            System.out.println("   Points avant : " + joueurActuel.getScore());
 
             int ptsSurCase = plateau.calculerScoreCase(joueurActuel.getId());
             int ptsCombat = plateau.getAndResetPointsCombat(joueurActuel.getId());

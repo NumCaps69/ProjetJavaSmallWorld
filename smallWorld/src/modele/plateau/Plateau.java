@@ -342,7 +342,7 @@ public class Plateau extends Observable {
     }
 
     public int calculerScoreCase(int idJoueurActuel) {
-        int pts = 0;
+        int score = 0;
         for (int x = 0; x < SIZE_X; x++) {
             for (int y = 0; y < SIZE_Y; y++) {
                 Case c = grilleCases[x][y];
@@ -355,11 +355,11 @@ public class Plateau extends Observable {
                         case "Humain"  -> { if (c.getBiome() == Biome.PLAIN)    ptsParCase++; }
                         case "Gobelin" -> { if (c.getBiome() == Biome.DESERT)   ptsParCase++; }
                     }
-                    pts = pts + ptsParCase;
+                    score = pts + ptsParCase;
                     }
             }
         }
-        return pts;
+        return score;
     }
 
 

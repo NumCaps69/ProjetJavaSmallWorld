@@ -29,7 +29,7 @@ public class Joueur {
         return score;
     }
 
-    public void ajoutScore(int pt){
+    public synchronized void ajoutScore(int pt){
         this.score += pt;
     }
     public int getId(){
