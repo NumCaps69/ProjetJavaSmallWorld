@@ -56,9 +56,6 @@ public class Jeu extends Thread{
 
     }
 
-    public void attaquerCoup(Case c) {
-    }
-
 
     public void run() {
         jouerPartie();
