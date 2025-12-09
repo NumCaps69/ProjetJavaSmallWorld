@@ -83,6 +83,7 @@ public class Jeu extends Thread{
                 } else {
                     appliquerCoup(c);
                 }
+                //Calcul des points
             }
 
         }
