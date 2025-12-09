@@ -102,24 +102,6 @@ public class VueControleur extends JFrame implements Observer {
 
         grilleIP = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
 
-        btnFINTOUR = new JButton("FIN TOUR");
-        btnFINTOUR.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                jeu.envoyerCoup(new Coup(null, null));
-                // reset case clic
-                caseClic1 = null;
-                caseClic2 = null;
-            }
-        });
-
-        JPanel panelPrincipal = new JPanel(new BorderLayout());
-        panelPrincipal.add(grilleIP, BorderLayout.CENTER);
-
-        JPanel panelBouton = new JPanel();
-        panelBouton.add(btnFINTOUR);
-        panelPrincipal.add(panelBouton, BorderLayout.SOUTH);
-
-        add(panelPrincipal); // Ajoute le panneau principal à la JFrame
         tabIP = new ImagePanel[sizeX][sizeY];
 
         for (int y = 0; y < sizeY; y++) {
@@ -147,12 +129,27 @@ public class VueControleur extends JFrame implements Observer {
                     }
                 });
 
-
-
                 grilleIP.add(iP);
             }
         }
-        add(grilleIP);
+        btnFINTOUR = new JButton("FIN TOUR");
+        btnFINTOUR.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                jeu.envoyerCoup(new Coup(null, null));
+                // reset case clic
+                caseClic1 = null;
+                caseClic2 = null;
+            }
+        });
+        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        panelPrincipal.add(grilleIP, BorderLayout.CENTER);
+
+        JPanel panelBouton = new JPanel();
+        panelBouton.add(btnFINTOUR);
+        panelPrincipal.add(panelBouton, BorderLayout.SOUTH);
+
+        add(panelPrincipal);
+        //add(grilleIP);
     }
 
     private Image getImageBiome(Biome biome) {
