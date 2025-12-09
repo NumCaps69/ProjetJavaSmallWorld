@@ -91,6 +91,26 @@ public class VueControleur extends JFrame implements Observer {
         //System.out.println("desert = " + icoDesert.getWidth(null) + "x" + icoDesert.getHeight(null));
 
     }
+    private void clearBordure(){
+        for(int x = 0; x<sizeX; x++){
+            for(int y = 0; y<sizeY; y++){
+                tabIP[x][y].setBorder(null);
+            }
+        }
+    }
+
+    private void afficherDepPossible(int Depx, int Depy) {
+        Case caseDep = plateau.getCases()[Depx][Depy];
+        for (int x = 0; x < sizeX; x++) {
+            for (int y = 0; y < sizeY; y++) {
+                Case caseArr = plateau.getCases()[x][y];
+                if (plateau.peutDeplacer(caseDep,caseArr)){
+                    tabIP[x][y].setBorder(BorderFactory.createLineBorder(Color.GREEN, 3));
+                }
+            }
+        }
+        tabIP[Depx][Depy].setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+    }
 
 
 
@@ -109,7 +129,6 @@ public class VueControleur extends JFrame implements Observer {
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
                 ImagePanel iP = new ImagePanel();
-
                 tabIP[x][y] = iP; // on conserve les cases graphiques dans tabJLabel pour avoir un accès pratique à celles-ci (voir mettreAJourAffichage() )
 
                 final int xx = x; // permet de compiler la classe anonyme ci-dessous
@@ -120,8 +139,18 @@ public class VueControleur extends JFrame implements Observer {
                     public void mouseClicked(MouseEvent e) {
 
                         if (caseClic1 == null) {
-                            caseClic1 = plateau.getCases()[xx][yy];
-                        } else {
+                            Case c = plateau.getCases()[xx][yy];
+                            if (c.getUnites() != null){
+                                caseClic1 = c;
+                                afficherDepPossible(xx, yy);
+                            }
+                        }
+                        else {
+                            clearBordure();
+                            if(plateau.getCases()[xx][yy] == caseClic1){
+                                caseClic1 = null;
+                                return;
+                            }
                             caseClic2 = plateau.getCases()[xx][yy];
                             jeu.envoyerCoup(new Coup(caseClic1, caseClic2));
                             caseClic1 = null;
