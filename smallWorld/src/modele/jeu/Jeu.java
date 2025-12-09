@@ -77,8 +77,9 @@ public class Jeu extends Thread{
     public void jouerPartie() {
         while (tour<=MAXT) {
             Joueur joueurActuel = Tour();
+            int idActuel = joueurActuel.getId();
             plateau.notifyObservers();
-            System.out.println("--- Début du tour de J" + indJoueur + " ---");
+            System.out.println("--- Début du tour de J" + (indJoueur+1) + " ---");
             System.out.println(("Points du joueur " + indJoueur + " : " + joueurActuel.getScore()));
             boolean finDeTour = false;
 
@@ -94,17 +95,25 @@ public class Jeu extends Thread{
 
             }
             //Calcul des points
-            System.out.println(">> BILAN FIN DE TOUR JOUEUR " + (indJoueur+1));
+            System.out.println(">> BILAN FIN DE TOUR JOUEUR " + idActuel);
             System.out.println("   Points avant : " + joueurActuel.getScore());
 
-            int ptsSurCase = plateau.calculerScoreCase(joueurActuel.getId());
-            int ptsCombat = plateau.getAndResetPointsCombat(joueurActuel.getId());
+            int ptsSurCase = plateau.calculerScoreCase(idActuel);
+            int ptsCombat = plateau.getAndResetPointsCombat(idActuel);
             int ptsTotal = ptsSurCase + ptsCombat;
             System.out.println("Gains de ce tour : " + ptsSurCase + " (cases) +" + ptsCombat + " (combat)");
-            joueurActuel.ajoutScore(ptsTotal);
+            Joueur j = this.joueurs[idActuel];
+            j.ajoutScore(ptsTotal);
 
-            System.out.println("SCORE TOTAL J" + indJoueur + " : " + joueurActuel.getScore());
-            System.out.println("-------------------------------------------------");
+            System.out.println("\n--- ETAT DES SCORES (Tableau complet) ---");
+            for(int i=0; i < nb_joueur; i++) {
+                System.out.println("Tab[" + i + "] (ID " + joueurs[i].getId() + ") : " + joueurs[i].getScore() + " points");
+            }
+            System.out.println("-----------------------------------------\n");
+            if(indJoueur == nb_joueur-1) {
+                tour++;
+                System.out.println(">>> FIN DU TOUR DE TABLE " + (tour - 1) + " <<<");
+            }
         }
     }
 }

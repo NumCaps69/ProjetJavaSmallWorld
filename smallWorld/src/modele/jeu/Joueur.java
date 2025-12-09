@@ -7,6 +7,7 @@ public class Joueur {
 
     public Joueur(Jeu _jeu, int id) {
         jeu = _jeu;
+        this.id = id;
         score = 0;
     }
 
@@ -29,7 +30,7 @@ public class Joueur {
         return score;
     }
 
-    public synchronized void ajoutScore(int pt){
+    public void ajoutScore(int pt){
         this.score += pt;
     }
     public int getId(){
