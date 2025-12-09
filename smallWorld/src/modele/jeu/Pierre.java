@@ -20,12 +20,4 @@ public class Pierre extends Obstacle{
         return possible_passage;
     }
 
-    @Override
-    public boolean canPass(Unites u) {
-        if ("Humain".equals(u.getTypeUnite())) {
-            return true;
-        } else {
-            return possible_passage;
-        }
-    }
 }
