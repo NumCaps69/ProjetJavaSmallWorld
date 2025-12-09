@@ -15,11 +15,13 @@ public abstract class Unites {
     protected Plateau plateau;
     protected int nombre_unite;
     protected int movement_possible;
+    protected int idJoueur;
 
-    public Unites(Plateau _plateau, int nb_unite) {
+    public Unites(Plateau _plateau, int nb_unite, int _id_joueur) {
         plateau = _plateau;
         nombre_unite = nb_unite;
         movement_possible = 0;
+        idJoueur = _id_joueur;
     }
 
     public void quitterCase() {
@@ -80,6 +82,9 @@ public abstract class Unites {
     }
     public int getMovement_possible() {
         return movement_possible;
+    }
+    public int getIdJoueur() {
+        return idJoueur;
     }
     public abstract String getTypeUnite();
 

@@ -5,9 +5,9 @@ import modele.plateau.Plateau;
 
 public class Gobelin extends Unites{
     protected Biome biome_favori;
-    public Gobelin(Plateau _plateau, int mv, int nb_u) {
-        super(_plateau, nb_u);
-        this.movement_possible = 5;
+    public Gobelin(Plateau _plateau, int mv, int nb_unb_u, int idJoueur) {
+        super(_plateau, nb_unb_u, idJoueur);
+        this.movement_possible = mv; //5
         biome_favori = Biome.DESERT;
     }
     @Override

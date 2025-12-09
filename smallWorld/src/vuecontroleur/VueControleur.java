@@ -140,9 +140,16 @@ public class VueControleur extends JFrame implements Observer {
 
                         if (caseClic1 == null) {
                             Case c = plateau.getCases()[xx][yy];
-                            if (c.getUnites() != null){
-                                caseClic1 = c;
-                                afficherDepPossible(xx, yy);
+
+                            // VERIFICATION ICI :
+                            if (c.getUnites() != null) {
+                                // On vérifie si l'ID du joueur de l'unité correspond au joueur courant du jeu
+                                if (c.getUnites().getIdJoueur() == jeu.getIndJoueur()) {
+                                    caseClic1 = c;
+                                    afficherDepPossible(xx, yy);
+                                } else {
+                                    System.out.println("Ce n'est pas votre unité ! C'est le tour du joueur " + jeu.getIndJoueur());
+                                }
                             }
                         }
                         else {

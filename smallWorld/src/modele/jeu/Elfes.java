@@ -5,9 +5,9 @@ import modele.plateau.Plateau;
 
 public class Elfes extends Unites {
     protected Biome biome_favori;
-    public Elfes(Plateau _plateau, int mv, int nb_u){
-        super(_plateau, nb_u);
-        this.movement_possible = 1;
+    public Elfes(Plateau _plateau, int mv, int nb_u, int idJoueur) {
+        super(_plateau, nb_u, idJoueur);
+        this.movement_possible = mv; //1
         biome_favori = Biome.FOREST;
     }
     @Override

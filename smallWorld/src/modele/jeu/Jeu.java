@@ -66,6 +66,9 @@ public class Jeu extends Thread{
         System.out.println(indJoueur);
         return joueurs[indJoueur];
     }
+    public int getIndJoueur(){
+        return indJoueur;
+    }
 
     public void jouerPartie() {
         while(true) {

@@ -64,7 +64,8 @@ public class Plateau2J extends Plateau{
                         do{
                             rand_u = new Random().nextInt(8);
                         }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
-                        Elfes e = new Elfes(this, 3, rand_u);
+                        //j1 = 0
+                        Elfes e = new Elfes(this, 3, rand_u, 0);
                         e.allerSurCase(grilleCases[x][y]);
                         unite_pose+=rand_u;
                         System.out.println("unite posée J1");
@@ -82,7 +83,7 @@ public class Plateau2J extends Plateau{
                         do{
                             rand_u = new Random().nextInt(8);
                         }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
-                        Gobelin g = new Gobelin(this, 3, rand_u);
+                        Gobelin g = new Gobelin(this, 3, rand_u, 1);
                         g.allerSurCase(grilleCases[x][y]);
                         unite_pose+=rand_u;
                     }

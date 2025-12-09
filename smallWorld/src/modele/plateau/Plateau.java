@@ -52,9 +52,9 @@ public class Plateau extends Observable {
     public void initialiser() {
 
 
-        Elfes c = new Elfes(this, 3, 4);
+        Elfes c = new Elfes(this, 3, 4, 0);
         c.allerSurCase(grilleCases[4][7]);
-        Gobelin cG = new Gobelin(this, 3, 9);
+        Gobelin cG = new Gobelin(this, 3, 9, 1);
         cG.allerSurCase(grilleCases[4][6]);
         setChanged();
         notifyObservers();

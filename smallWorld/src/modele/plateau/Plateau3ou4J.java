@@ -93,7 +93,7 @@ public class Plateau3ou4J extends Plateau {
                         do{
                             rand_u = new Random().nextInt(8);
                         }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
-                        Elfes e = new Elfes(this, 3, rand_u);
+                        Elfes e = new Elfes(this, 1, rand_u, 0);
                         e.allerSurCase(grilleCases[x][y]);
                         unite_pose+=rand_u;
                         System.out.println("unite posée J1");
@@ -112,7 +112,7 @@ public class Plateau3ou4J extends Plateau {
                         do{
                             rand_u = new Random().nextInt(8);
                         }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
-                        Gobelin g = new Gobelin(this, 3, rand_u);
+                        Gobelin g = new Gobelin(this, 5, rand_u, 1);
                         g.allerSurCase(grilleCases[x][y]);
                         unite_pose+=rand_u;
                     }
@@ -131,7 +131,7 @@ public class Plateau3ou4J extends Plateau {
                             do {
                                 rand_u = new Random().nextInt(8);
                             } while (rand_u == 0 || rand_u > (max_unite_per_all - unite_pose));
-                            Humain h = new Humain(this, 3, rand_u);
+                            Humain h = new Humain(this, 3, rand_u, 2);
                             h.allerSurCase(grilleCases[x][y]);
                             unite_pose += rand_u;
                         }
@@ -152,7 +152,7 @@ public class Plateau3ou4J extends Plateau {
                             do {
                                 rand_u = new Random().nextInt(8);
                             } while (rand_u == 0 || rand_u > (max_unite_per_all - unite_pose));
-                            Humain h = new Humain(this, 3, rand_u);
+                            Humain h = new Humain(this, 3, rand_u, 2);
                             h.allerSurCase(grilleCases[x][y]);
                             unite_pose += rand_u;
                         }
@@ -171,7 +171,7 @@ public class Plateau3ou4J extends Plateau {
                             do{
                                 rand_u = new Random().nextInt(8);
                             }while(rand_u==0 || rand_u > (max_unite_per_all-unite_pose));
-                            Nain n = new Nain(this, 3, rand_u);
+                            Nain n = new Nain(this, 4, rand_u, 3);
                             n.allerSurCase(grilleCases[x][y]);
                             unite_pose+=rand_u;
                         }
