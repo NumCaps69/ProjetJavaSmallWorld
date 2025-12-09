@@ -10,19 +10,19 @@ public class Jeu extends Thread{
     private final int nb_joueur;
     private Joueur[] joueurs;
     protected Coup coupRecu;
-    private int indJoueur = 0; //avoir 0 au déb
+    private int indJoueur = -1; //avoir 0 au déb
     private int tour = 1;
     private static int MAXT;
 
 
 
-    public Jeu(int nb_j, boolean activer_obs, int max_u, int max_obj) {
+    public Jeu(int nb_j, boolean activer_obs, int max_u, int MAXT) {
         if(nb_j==2){
-            plateau = new Plateau2J(nb_j,activer_obs,max_u,max_obj );
+            plateau = new Plateau2J(nb_j,activer_obs,max_u,MAXT );
             System.out.print("2 Joueurs !! \n");
             plateau.initialiser();
         }else {
-            plateau = new Plateau3ou4J(nb_j, activer_obs, max_u, max_obj);
+            plateau = new Plateau3ou4J(nb_j, activer_obs, max_u, MAXT);
             plateau.initialiser();
             plateau.debugQuiPossedeQuoi();
         }
