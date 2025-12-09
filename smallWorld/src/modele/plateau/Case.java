@@ -22,6 +22,7 @@ public class Case {
     protected int nb_unites;
     protected Random rand;
     protected Obstacle o;
+    protected Evenement e;
 
 
 
@@ -65,6 +66,13 @@ public class Case {
 
     public Biome getBiome() {
         return biome;
+    }
+    public void setEvent(Evenement e) {
+        this.e = e;
+    }
+
+    public Evenement getEvent() {
+        return e;
     }
 
     public Biome randomBiome() {

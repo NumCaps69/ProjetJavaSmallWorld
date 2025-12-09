@@ -9,73 +9,27 @@ import modele.plateau.Case;
 import modele.plateau.Biome;
 
 public class Plateau3ou4J extends Plateau {
-    protected int _longueur;
-    protected int _largeur;
-    protected Case[][] Tab_case;
     protected int nb_joueurs;
-    protected boolean activer_obs;
     protected int max_unite_per_all;
-    protected int max_object;
 
     public Plateau3ou4J(int nb, boolean activer_obs, int max_u, int max_obj) {
-        super();
-        _longueur = 7;
-        _largeur = 7;
-        Tab_case = new Case[7][7];
+        super(7, 7, activer_obs, max_obj);
         nb_joueurs = nb;
         this.activer_obs = activer_obs;
         max_unite_per_all = max_u;
         max_object = max_obj;
-        initPlateauVide();
     }
 
     private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
 
-    private void initPlateauVide() {
-        for (int x = 0; x < _longueur; x++) {
-            for (int y = 0; y < _largeur; y++) {
-                Tab_case[x][y] = new Case(this);
-                map.put(Tab_case[x][y], new Point(x, y));
-            }
-        }
-    }
-    private void genererPierres() {
-        if (!activer_obs) return;
-        int max_obj = 0;
-        while(max_obj < max_object) {
-            for (int x = 0; x < _longueur; x++) {
-                for (int y = 0; y < _largeur; y++) {
-                    if (grilleCases[x][y].getBiome() == Biome.PLAIN) {
-                        int rand = new Random().nextInt(2);
-                        if (rand == 1) { //true = 1
-                            grilleCases[x][y].setObstacle(new Pierre(this));
-                            System.out.println("obj posé");
-                            System.out.println(grilleCases[x][y].getObstacle() + " " +x + " " + y);
-                            max_obj++;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public int getSizeX() {
-        return _longueur;
-    }
-
-    @Override
-    public int getSizeY() {
-        return _largeur;
-    }
 
 
     @Override
     public void initialiser() {
         System.out.println("initialisation du plateau lancée en mode 3 ou 4J");
         genererPierres();
-        int x_max = _longueur;
-        int y_max = _largeur;
+        int x_max = getSizeX();
+        int y_max = getSizeY();
         // xmin j1 et j2 c'est 0 et leur max c'est le min de j3 et j4
         int x_minj3 = x_max / 2;
         int x_minj4 = x_minj3;

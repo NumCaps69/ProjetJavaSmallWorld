@@ -12,17 +12,31 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Observable;
 import java.lang.Math;
+import java.util.Random;
 
 public class Plateau extends Observable {
 
-    public static final int SIZE_X = 8;
-    public static final int SIZE_Y = 8;
+    protected int SIZE_X = 8;
+    protected int SIZE_Y = 8;
+    protected boolean activer_obs;
+    protected int max_object;
+    protected boolean activer_evenements;
+    private int cooldownMeteo = 0;
 
 
     private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
     protected Case[][] grilleCases = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
     public Plateau() {
+        this(8, 8, false, 0);
+        initPlateauVide();
+    }
+    public Plateau(int x, int y, boolean activer_obs, int max_object) {
+        this.SIZE_X = x;
+        this.SIZE_Y = y;
+        this.activer_obs = activer_obs;
+        this.max_object = max_object;
+        this.grilleCases = new Case[SIZE_X][SIZE_Y];
         initPlateauVide();
     }
 
@@ -60,6 +74,48 @@ public class Plateau extends Observable {
         notifyObservers();
 
     }
+    protected void genererPierres() {
+        if (!activer_obs) return;
+        int max_obj = 0;
+        while(max_obj < max_object) {
+            for (int x = 0; x < getSizeX(); x++) {
+                for (int y = 0; y < getSizeY(); y++) {
+                    if (grilleCases[x][y].getBiome() == Biome.PLAIN) {
+                        int rand = new Random().nextInt(2);
+                        if (rand == 1) { //true = 1
+                            grilleCases[x][y].setObstacle(new Pierre(this));
+                            System.out.println("obj posé");
+                            System.out.println(grilleCases[x][y].getObstacle() + " " +x + " " + y);
+                            max_obj++;
+                        }
+                    }
+                }
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
+    public void genererEvenementBase(){
+        Random rand = new Random();
+        for(int x = 0; x < getSizeX(); x++){
+            for(int y = 0; y < getSizeY(); y++){
+                Case c = grilleCases[x][y];
+                c.setObstacle(grilleCases[x][y].getObstacle());
+                if(rand.nextInt(100) < 20 && c.getBiome().equals(Biome.FOREST)) {
+                    c.setEvent(Evenement.BROUILLARD);
+                } else if (rand.nextInt(100) < 50 && c.getBiome().equals(Biome.FOREST) &&
+                            ((grilleCases[x-1][y].getBiome() == Biome.FOREST) ||
+                        (grilleCases[x+1][y].getBiome() == Biome.FOREST) ||
+                        (grilleCases[x][y-1].getBiome() == Biome.FOREST) ||
+                        (grilleCases[x][y+1].getBiome() == Biome.FOREST))){
+                    c.setEvent(Evenement.BROUILLARD);
+                }
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
+
 
     public void arriverCase(Case c, Unites u) {
         c.setUnites(u, u.getNombreUnite());

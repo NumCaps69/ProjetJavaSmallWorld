@@ -8,49 +8,27 @@ import java.util.Random;
 
 public class Plateau2J extends Plateau{
 
-    protected int _longueur ;
-    protected int _largeur ;
+    protected int nb_joueurs;
+    protected int max_unite_per_all;
 
-    protected boolean activer_obs;
-    public static final int SIZE_X = 6;
-    public static final int SIZE_Y = 6;
-    //rajouter unite choisi par chacun quand on aura le time
-    public Plateau2J(boolean activer_obs) {
-        super();
-        _longueur = 6;
-        _largeur = 6;
-        grilleCases = new Case[SIZE_X][SIZE_Y];
+    public Plateau2J(int nb, boolean activer_obs, int max_u, int max_obj) {
+        super(6, 6, activer_obs, max_obj);
+        nb_joueurs = nb;
         this.activer_obs = activer_obs;
-        initPlateauVide();
-    }
-    @Override
-    public int getSizeX() {
-        return _longueur;
+        max_unite_per_all = max_u;
+        max_object = max_obj;
     }
 
-    @Override
-    public int getSizeY() {
-        return _largeur;
-    }
+    private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
 
 
-
-    private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
-    private void initPlateauVide() {
-        for (int x = 0; x < _longueur; x++) {
-            for (int y = 0; y < _largeur; y++) {
-                grilleCases[x][y] = new Case(this);
-                map.put(grilleCases[x][y], new Point(x, y));
-            }
-        }
-    }
 
     @Override
     public void initialiser() {
         System.out.println("initialisation du plateau lancée en mode 2J");
-        int x_max = _longueur;
-        int y_maxj1 = _largeur/2;
-        int y_maxj2 = _largeur;
+        int x_max = getSizeX();
+        int y_maxj1 = getSizeY()/2;
+        int y_maxj2 = getSizeY();
         int max_unite_per_all = 8;
         int unite_pose = 0;
         while(unite_pose < max_unite_per_all){//dans le cas où on a pas le nb a poser requis...
