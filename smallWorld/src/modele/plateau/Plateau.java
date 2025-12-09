@@ -350,33 +350,20 @@ public class Plateau extends Observable {
                 if (u != null && u.getIdJoueur() == idJoueurActuel) {
                     int ptsParCase = 1;
                     switch (u.getTypeUnite()) {
-                        case "Nain" -> {
-                            if (c.getBiome() == Biome.MOUNTAIN){
-                                ptsParCase++;
-                            }
-                        }
-                        case "Elfes" -> {
-                            if (c.getBiome() == Biome.FOREST){
-                                ptsParCase++;
-                            }
-                        }
-                        case "Humain" -> {
-                            if (c.getBiome() == Biome.PLAIN){
-                                ptsParCase++;
-                            }
-                        }
-                        case "Gobelin" -> {
-                            if (c.getBiome() == Biome.DESERT){
-                                ptsParCase++;
-                            }
-                        }
+                        case "Nain"    -> { if (c.getBiome() == Biome.MOUNTAIN) ptsParCase++; }
+                        case "Elfes"   -> { if (c.getBiome() == Biome.FOREST)   ptsParCase++; }
+                        case "Humain"  -> { if (c.getBiome() == Biome.PLAIN)    ptsParCase++; }
+                        case "Gobelin" -> { if (c.getBiome() == Biome.DESERT)   ptsParCase++; }
                     }
                     pts = pts + ptsParCase;
-                }
+                    }
             }
         }
         return pts;
     }
+
+
+
     private HashMap<Integer, Integer> pointsCombatPending = new HashMap<>();
 
     public void combatGagne(int idJ){
@@ -392,5 +379,18 @@ public class Plateau extends Observable {
         }
         return 0;
     }
-
+    public void debugQuiPossedeQuoi() {
+        System.out.println("\n--- SCAN DU PLATEAU ---");
+        for (int x = 0; x < SIZE_X; x++) {
+            for (int y = 0; y < SIZE_Y; y++) {
+                if (grilleCases[x][y].getUnites() != null) {
+                    Unites u = grilleCases[x][y].getUnites();
+                    System.out.println("Case [" + x + "," + y + "] : "
+                            + u.getTypeUnite()
+                            + " appartient au Joueur ID = " + u.getIdJoueur());
+                }
+            }
+        }
+        System.out.println("-----------------------\n");
+    }
 }

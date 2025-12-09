@@ -30,7 +30,7 @@ public class Case {
         System.out.println("Appel à la fonction");
         if(this.nb_unites > 0) {
             this.nb_unites = 0;
-            u = null;
+            this.u = null;
         }
 
     }

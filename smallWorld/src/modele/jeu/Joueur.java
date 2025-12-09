@@ -30,7 +30,7 @@ public class Joueur {
     }
 
     public void ajoutScore(int pt){
-        this.score = pt;
+        this.score += pt;
     }
     public int getId(){
         return id;

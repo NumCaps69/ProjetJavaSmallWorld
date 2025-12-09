@@ -15,21 +15,22 @@ public class Jeu extends Thread{
     private static int MAXT;
 
 
-    public Jeu(int nb_j, boolean activer_obs, int max_u, int max_obj, int MAXT) {
+
+    public Jeu(int nb_j, boolean activer_obs, int max_u, int max_obj) {
         if(nb_j==2){
-            plateau = new Plateau2J(nb_j, activer_obs, max_u, max_obj);
+            plateau = new Plateau2J(nb_j,activer_obs,max_u,max_obj );
             System.out.print("2 Joueurs !! \n");
             plateau.initialiser();
         }else {
             plateau = new Plateau3ou4J(nb_j, activer_obs, max_u, max_obj);
             plateau.initialiser();
+            plateau.debugQuiPossedeQuoi();
         }
         this.nb_joueur = nb_j;
         this.joueurs = new Joueur[nb_joueur];
         for (int i = 0; i < nb_joueur; i++) {
             joueurs[i] = new Joueur(this,i);
         }
-        this.MAXT = MAXT;
         start();
 
     }
@@ -75,27 +76,32 @@ public class Jeu extends Thread{
     public void jouerPartie() {
         while (tour<=MAXT) {
             Joueur joueurActuel = Tour();
+            plateau.notifyObservers();
             boolean finDeTour = false;
 
             while (!finDeTour) {
                 Coup c = joueurActuel.getCoup();
                 if (c.isFinDeTour()) {
-                    System.out.println("Fin du tour du joueur " + (indJoueur + 1) + " button");
+                    System.out.println("Fin du tour demandé par le joueur " + (indJoueur + 1) + " button");
                     finDeTour = true;
                 } else {
                         appliquerCoup(c);
+                        plateau.notifyObservers();
                 }
-                plateau.notifyObservers();
-                //Calcul des points
-                int ptsSurCase = plateau.calculerScoreCase(joueurActuel.getId());
-                System.out.println("J" + indJoueur + " contrôle " + ptsSurCase + " cases");
-                joueurActuel.ajoutScore(ptsSurCase);
-
-                System.out.println("SCORE TOTAL J" + indJoueur + " : " + joueurActuel.getScore());
-                System.out.println("-------------------------------------------------");
 
             }
+            //Calcul des points
+            System.out.println(">> BILAN FIN DE TOUR JOUEUR " + (indJoueur+1));
+            System.out.println("   Trésor avant : " + joueurActuel.getScore());
 
+            int ptsSurCase = plateau.calculerScoreCase(joueurActuel.getId());
+            int ptsCombat = plateau.getAndResetPointsCombat(joueurActuel.getId());
+            int ptsTotal = ptsSurCase + ptsCombat;
+            System.out.println("Gains de ce tour : " + ptsSurCase + " (cases) +" + ptsCombat + " (combat)");
+            joueurActuel.ajoutScore(ptsTotal);
+
+            System.out.println("SCORE TOTAL J" + indJoueur + " : " + joueurActuel.getScore());
+            System.out.println("-------------------------------------------------");
         }
     }
 }
