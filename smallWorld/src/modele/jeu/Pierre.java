@@ -5,7 +5,7 @@ import modele.plateau.Plateau;
 
 public class Pierre extends Obstacle{
     protected Biome biome_spawn;
-    protected boolean possible_passage; //si on peut passer par dessus ou pas, enfin plus loin ou dessus
+    protected boolean possible_passage = false; //si on peut passer par dessus ou pas, enfin plus loin ou dessus
     public Pierre(Plateau _plateau) {
         super(_plateau);
         possible_passage = false;
@@ -15,6 +15,9 @@ public class Pierre extends Obstacle{
     public String getTypeObstacle() {
         return "Pierre";
     }
-
+    @Override
+    public boolean Traversee() {
+        return possible_passage;
+    }
 
 }

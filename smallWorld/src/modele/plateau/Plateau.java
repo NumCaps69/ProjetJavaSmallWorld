@@ -90,8 +90,13 @@ public class Plateau extends Observable {
             return;
         }
         c1.nb_unites = unit.getNombreUnite();
-        int d = dist(c1, c2);
-        if (d == 0) {
+        //int d = dist(c1, c2);
+        int d = calcDist(c1, c2, c1.getUnites().getMovement_possible());
+        if(d == -1){
+            System.out.println("Déplacment impossible : Obstacle sur le chemin");
+            return;
+        }
+        else if (d == 0) {
             System.out.println("Deplacement impossible, reste sur place");
         } else if(d<= unit.getMovement_possible()){
             System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
@@ -105,7 +110,55 @@ public class Plateau extends Observable {
 
         setChanged();
         notifyObservers();
+    }
 
+    private int calcDist(Case dep, Case arr, int move_possible){
+        //case null
+        if( dep == arr){
+            return 0;
+        }
+        int [][] Grille = new int[SIZE_X][SIZE_Y];
+        for(int i = 0; i < SIZE_X; i++){
+            for(int j = 0; j < SIZE_Y; j++){
+                Grille[i][j] = -1;
+            }
+        }
+        Point debut = map.get(dep);
+        Grille[debut.x][debut.y] = 0;
+        for(int l = 0; l < move_possible; l++){
+            boolean test = false;
+            for(int m = 0; m < SIZE_X; m++){
+                for(int n = 0; n < SIZE_Y; n++){
+                    if(Grille[m][n] == l){
+                        traiterVoisin(m, n+1, l+1, Grille, arr);
+                        traiterVoisin(m, n-1, l+1, Grille, arr);
+                        traiterVoisin(m+1, n, l+1, Grille, arr);
+                        traiterVoisin(m-1, n, l+1, Grille, arr);
+                        test = true;
+                    }
+                }
+            }
+            if(!test){
+                break;
+            }
+        }
+        Point fin = map.get(arr);
+        return Grille[fin.x][fin.y];
+
+
+    }
+    private void traiterVoisin(int x, int y, int d, int[][] Grille, Case arrivee) {
+        if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y) return;
+        if (Grille[x][y] != -1){
+            return;
+        }
+        Case c = grilleCases[x][y];
+        boolean estBloque = (c.getObstacle() != null && !c.getObstacle().Traversee());
+        if (estBloque) {
+            return;
+        }else{
+            Grille[x][y] = d;
+        }
     }
 
 

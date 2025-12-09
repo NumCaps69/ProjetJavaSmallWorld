@@ -13,5 +13,6 @@ public abstract class Obstacle {
     public Case getCase() {
         return c;
     }
+    public abstract boolean Traversee();
     public abstract String getTypeObstacle();
 }
