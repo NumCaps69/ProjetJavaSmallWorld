@@ -2,10 +2,12 @@ package modele.jeu;
 
 public class Joueur {
     private Jeu jeu;
+    private int score;
     //private Unites u;
 
     public Joueur(Jeu _jeu) {
         jeu = _jeu;
+        score = 0;
     }
 
 
@@ -21,5 +23,9 @@ public class Joueur {
         }
 
         return jeu.coupRecu;
+    }
+
+    public int getScore(){
+        return score;
     }
 }
