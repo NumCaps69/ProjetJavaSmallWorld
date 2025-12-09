@@ -28,7 +28,7 @@ public class VueControleur extends JFrame implements Observer {
     private Jeu jeu;
     private final int sizeX; // taille de la grille affichée
     private final int sizeY;
-    private static final int pxCase = 100; // nombre de pixel par case
+    private static final int pxCase = 120; // nombre de pixel par case
     // icones affichées dans la grille
     private Image icoElfes;
     private Image icoHumain;
@@ -76,10 +76,10 @@ public class VueControleur extends JFrame implements Observer {
         //icoElfes = new ImageIcon("./data/res/cat.png").getImage();
         //icoDesert = new ImageIcon("./data/res/desert.png").getImage();
 
-        icoElfes = new ImageIcon("smallWorld/data/units/unit_red.png").getImage();
-        icoHumain = new ImageIcon("smallWorld/data/units/unit_blue.png").getImage();
-        icoNain = new ImageIcon("smallWorld/data/units/unit_yellow.png").getImage();
-        icoGobelin = new ImageIcon("smallWorld/data/units/unit_green.png").getImage();
+        icoElfes = new ImageIcon("smallWorld/data/units/unit_elfe.png").getImage();
+        icoHumain = new ImageIcon("smallWorld/data/units/unit_human.png").getImage();
+        icoNain = new ImageIcon("smallWorld/data/units/unit_nain.png").getImage();
+        icoGobelin = new ImageIcon("smallWorld/data/units/unit_goblin.png").getImage();
         icoDesert = new ImageIcon("smallWorld/data/terrain/desert_tile.png").getImage();
         icoPlain = new ImageIcon("smallWorld/data/terrain/plain_tile.jpeg").getImage();
         icoForet = new ImageIcon("smallWorld/data/terrain/forest_tile.png").getImage();
@@ -97,7 +97,9 @@ public class VueControleur extends JFrame implements Observer {
     private void placerLesComposantsGraphiques() {
         setTitle("Smallworld");
         setResizable(true);
-        setSize(sizeX * pxCase, sizeX * pxCase);
+        int largeur = sizeX * pxCase;
+        int hauteur = (sizeY * pxCase) + 100;
+        setSize(largeur, hauteur);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer l'application à la fermeture de la fenêtre
 
         grilleIP = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
