@@ -85,8 +85,8 @@ public class VueControleur extends JFrame implements Observer {
         icoWater = new ImageIcon("smallWorld/data/terrain/water.png").getImage();
         icoStone = new ImageIcon("smallWorld/data/obstacles/stone_base.png").getImage();
 
-        System.out.println("plain = " + icoPlain.getWidth(null) + "x" + icoPlain.getHeight(null));
-        System.out.println("desert = " + icoDesert.getWidth(null) + "x" + icoDesert.getHeight(null));
+        //System.out.println("plain = " + icoPlain.getWidth(null) + "x" + icoPlain.getHeight(null));
+        //System.out.println("desert = " + icoDesert.getWidth(null) + "x" + icoDesert.getHeight(null));
 
     }
 
@@ -161,10 +161,11 @@ public class VueControleur extends JFrame implements Observer {
                 Case c = plateau.getCases()[x][y];
                 Image biomeIMG = getImageBiome(c.getBiome());
                 tabIP[x][y].setBack(biomeIMG);
-                System.out.print("Biome : " + c.getBiome() + " ");
+                //System.out.print("Biome : " + c.getBiome() + " ");
                 tabIP[x][y].setObs(null);
                 tabIP[x][y].setUnit(null);
-                System.out.print("\n");
+                tabIP[x][y].setTexte("");
+                //System.out.print("\n");
                 Unites u = c.getUnites();
                 Obstacle o = c.getObstacle();
                 if (o != null) {

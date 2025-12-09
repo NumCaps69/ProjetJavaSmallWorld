@@ -61,6 +61,7 @@ public class Jeu extends Thread{
 
     private Joueur Tour(){
         indJoueur = (indJoueur+1) % nb_joueur;
+        System.out.println(indJoueur);
         return joueurs[indJoueur];
     }
 

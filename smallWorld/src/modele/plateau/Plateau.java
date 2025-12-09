@@ -65,27 +65,39 @@ public class Plateau extends Observable {
     }
 
     public void arriverCase(Case c, Unites u) {
-
-        c.u = u;
-
+        c.setUnites(u, u.getNombreUnite());
     }
 
+
     public void deplacerUnite(Case c1, Case c2) {
-        Unites unit = c1.u;
+        if (c1 == null || c2 == null) {
+            System.out.println("Deux cases vides...");
+            return;
+        }
+        Unites unit = c1.getUnites();
+        if (unit == null) {
+            System.out.println("unit vide...");
+            return;
+        }
         Point p1 = map.get(c1);
         Point p2 = map.get(c2);
+        if (p1 == null || p2 == null) {
+            System.out.println("Hors plateau...");
+            return;
+        }
         if (p1.x != p2.x && p1.y != p2.y){ // gère le cas pour les déplacements en diagonale
             System.out.println("Déplacement impossible");
             return;
         }
         c1.nb_unites = unit.getNombreUnite();
         int d = dist(c1, c2);
-        if(d<= unit.getMovement_possible()){
+        if (d == 0) {
+            System.out.println("Deplacement impossible, reste sur place");
+        } else if(d<= unit.getMovement_possible()){
             System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
                     + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
             unit.allerSurCase(c2);
-        }
-        else{
+        } else{
             System.out.println("Déplacement impossible");
         }
 
