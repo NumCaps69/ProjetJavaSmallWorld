@@ -10,7 +10,7 @@ public class Jeu extends Thread{
     private final int nb_joueur;
     private Joueur[] joueurs;
     protected Coup coupRecu;
-    private int indJoueur;
+    private int indJoueur = -1; //avoir 0 au déb
 
 
 
@@ -47,6 +47,11 @@ public class Jeu extends Thread{
 
 
     public void appliquerCoup(Coup coup) {
+        if (coup.dep == null && coup.arr == null) {
+            // fin de tour = rien à faire au niveau du plateau
+            System.out.println("Fin du tour du joueur " + indJoueur);
+            return;
+        }
         plateau.deplacerUnite(coup.dep, coup.arr);
 
     }
@@ -69,10 +74,13 @@ public class Jeu extends Thread{
         Joueur retour = null;
 
         while(true) {
-            retour = Tour();
-            for(int i = 0; i<nb_joueur; i++) {
-                Coup c = retour.getCoup();
-                appliquerCoup(c);
+            boolean finiTour = false;
+            while (!finiTour) {
+                retour = Tour();
+                for (int i = 0; i < nb_joueur; i++) {
+                    Coup c = retour.getCoup();
+                    appliquerCoup(c);
+                }
             }
 
         }
