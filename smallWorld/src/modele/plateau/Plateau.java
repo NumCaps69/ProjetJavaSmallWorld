@@ -6,11 +6,7 @@
 package modele.plateau;
 
 
-import modele.jeu.Elfes;
-import modele.jeu.Gobelin;
-import modele.jeu.Humain;
-import modele.jeu.Nain;
-import modele.jeu.Unites;
+import modele.jeu.*;
 
 import java.awt.Point;
 import java.util.HashMap;
@@ -23,7 +19,7 @@ public class Plateau extends Observable {
     public static final int SIZE_Y = 8;
 
 
-    private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
+    private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
     protected Case[][] grilleCases = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
     public Plateau() {
@@ -33,6 +29,7 @@ public class Plateau extends Observable {
     public Case[][] getCases() {
         return grilleCases;
     }
+
     public int getSizeX() {
         return SIZE_X;
     }
@@ -57,7 +54,7 @@ public class Plateau extends Observable {
 
         Elfes c = new Elfes(this, 3, 4);
         c.allerSurCase(grilleCases[4][7]);
-        Gobelin cG =  new Gobelin(this, 3, 9);
+        Gobelin cG = new Gobelin(this, 3, 9);
         cG.allerSurCase(grilleCases[4][6]);
         setChanged();
         notifyObservers();
@@ -92,15 +89,49 @@ public class Plateau extends Observable {
         if (d == 0 || d > unit.getMovement_possible()) {
             System.out.println("Deplacement impossible, reste sur place");
             return false;
-        } else if (d <= unit.getMovement_possible()) {
-            System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
-                    + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
-            return true;
-        } else {
-            System.out.println("Déplacement impossible");
+        }
+        //Condition de l'obstacle
+        int xDir = Integer.compare(p2.x, p1.x); // Vaut -1, 0 ou 1
+        int yDir = Integer.compare(p2.y, p1.y); // Vaut -1, 0 ou 1
+
+        // On part de la case juste après le départ
+        int x = p1.x + xDir;
+        int y = p1.y + yDir;
+
+        // On avance case par case jusqu'à l'arrivée (incluse)
+        while (x != p2.x || y != p2.y) {
+            Case caseIntermediaire = grilleCases[x][y];
+            Obstacle obs = caseIntermediaire.getObstacle();
+
+            // Si on croise un obstacle infranchissable sur le chemin
+            if (obs != null && !obs.Traversee()) {
+                System.out.println("Chemin bloqué par " + obs.getTypeObstacle() + " en " + x + "," + y);
+                return false;
+            }
+
+            // On vérifie aussi s'il y a une autre UNITÉ sur le chemin (sauf à l'arrivée car on peut attaquer)
+            if (caseIntermediaire.getUnites() != null) {
+                System.out.println("Chemin bloqué par une unité");
+                return false;
+            }
+
+            x += xDir;
+            y += yDir;
+        }
+
+        // 4. Vérification finale de la case d'arrivée (c2)
+        // On refait le check pour l'arrivée spécifiquement (au cas où la boucle while s'arrête juste avant)
+        Obstacle obsArrivee = c2.getObstacle();
+        if (obsArrivee != null && !obsArrivee.Traversee()) {
+            System.out.println("Case d'arrivée bloquée");
             return false;
         }
-    }
+        else {
+                System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
+                        + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
+                return true;
+            }
+        }
 
     public void deplacerUnite(Case c1, Case c2) {
         Unites unit = c1.getUnites();
