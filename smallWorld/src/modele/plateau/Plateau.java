@@ -355,7 +355,7 @@ public class Plateau extends Observable {
                         case "Humain"  -> { if (c.getBiome() == Biome.PLAIN)    ptsParCase++; }
                         case "Gobelin" -> { if (c.getBiome() == Biome.DESERT)   ptsParCase++; }
                     }
-                    score = pts + ptsParCase;
+                    score += ptsParCase;
                     }
             }
         }
