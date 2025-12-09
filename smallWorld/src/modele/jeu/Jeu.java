@@ -71,14 +71,16 @@ public class Jeu extends Thread{
     }
 
     public void jouerPartie() {
-        Joueur retour = null;
-
         while(true) {
-            boolean finiTour = false;
-            while (!finiTour) {
-                retour = Tour();
-                for (int i = 0; i < nb_joueur; i++) {
-                    Coup c = retour.getCoup();
+            Joueur joueurActuel = Tour();
+            boolean finDeTour = false;
+
+            while (!finDeTour) {
+                Coup c = joueurActuel.getCoup();
+                if (c.dep == null && c.arr == null) {
+                    System.out.println("Fin du tour du joueur " + (indJoueur + 1) + " button");
+                    finDeTour = true;
+                } else {
                     appliquerCoup(c);
                 }
             }
