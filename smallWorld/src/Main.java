@@ -1,5 +1,4 @@
-import modele.plateau.Plateau;
-import modele.plateau.Plateau2J;
+import modele.plateau.*;
 import vuecontroleur.VueControleur;
 import modele.jeu.Jeu;
 
