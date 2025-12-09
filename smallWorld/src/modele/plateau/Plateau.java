@@ -122,16 +122,16 @@ public class Plateau extends Observable {
         // 4. Vérification finale de la case d'arrivée (c2)
         // On refait le check pour l'arrivée spécifiquement (au cas où la boucle while s'arrête juste avant)
         Obstacle obsArrivee = c2.getObstacle();
-        if (obsArrivee != null && !obsArrivee.Traversee()) {
-            System.out.println("Case d'arrivée bloquée");
-            return false;
-        }
-        else {
-                System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
-                        + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
-                return true;
+        if(obsArrivee !=null) {
+           if(!obsArrivee.canPass(unit)){
+               System.out.println("Case bloquée par un obstacle");
+               return false;
             }
         }
+        System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
+                + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
+        return true;
+    }
 
     public void deplacerUnite(Case c1, Case c2) {
         Unites unit = c1.getUnites();

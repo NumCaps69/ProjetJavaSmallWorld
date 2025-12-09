@@ -15,4 +15,5 @@ public abstract class Obstacle {
     }
     public abstract boolean Traversee();
     public abstract String getTypeObstacle();
+    public abstract boolean canPass(Unites u);
 }
