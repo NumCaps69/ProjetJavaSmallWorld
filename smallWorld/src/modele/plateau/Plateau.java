@@ -259,10 +259,26 @@ public class Plateau extends Observable {
                 if (u != null && u.getIdJoueur() == idJoueurActuel) {
                     int ptsParCase = 1;
                     switch (u.getTypeUnite()) {
-                        case "Nain"    -> { if (c.getBiome() == Biome.MOUNTAIN) ptsParCase++; }
-                        case "Elfes"   -> { if (c.getBiome() == Biome.FOREST)   ptsParCase++; }
-                        case "Humain"  -> { if (c.getBiome() == Biome.PLAIN)    ptsParCase++; }
-                        case "Gobelin" -> { if (c.getBiome() == Biome.DESERT)   ptsParCase++; }
+                        case "Nain" -> {
+                            if (c.getBiome() == Biome.MOUNTAIN){
+                                ptsParCase++;
+                            }
+                        }
+                        case "Elfes" -> {
+                            if (c.getBiome() == Biome.FOREST){
+                                ptsParCase++;
+                            }
+                        }
+                        case "Humain" -> {
+                            if (c.getBiome() == Biome.PLAIN){
+                                ptsParCase++;
+                            }
+                        }
+                        case "Gobelin" -> {
+                            if (c.getBiome() == Biome.DESERT){
+                                ptsParCase++;
+                            }
+                        }
                     }
                     pts = pts + ptsParCase;
                 }
@@ -270,10 +286,20 @@ public class Plateau extends Observable {
         }
         return pts;
     }
+    private HashMap<Integer, Integer> pointsCombatPending = new HashMap<>();
 
     public void combatGagne(int idJ){
+        pointsCombatPending.put(idJ, pointsCombatPending.getOrDefault(idJ, 0) + 1);
         setChanged();
         notifyObservers("SCORE : " + idJ);
+    }
+    public int getAndResetPointsCombat(int idJoueur) {
+        if (pointsCombatPending.containsKey(idJoueur)) {
+            int pts = pointsCombatPending.get(idJoueur);
+            pointsCombatPending.put(idJoueur, 0); // Reset à 0 après lecture
+            return pts;
+        }
+        return 0;
     }
 
 }

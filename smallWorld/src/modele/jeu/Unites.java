@@ -53,6 +53,7 @@ public abstract class Unites {
                         plateau.combatGagne(this.idJoueur);
                     }
                     else{
+                        plateau.combatGagne(uniteSurCase.getIdJoueur());
                         this.nombre_unite = 0;
                         this.c = null;
                         System.out.println(this.getTypeUnite() + " " + this.nombre_unite + " a perdu (1)");
@@ -67,6 +68,7 @@ public abstract class Unites {
                         this.nombre_unite = 0;
                         this.c = null;
                         System.out.println(this.getTypeUnite() + " " + this.nombre_unite + " a perdu (2)");
+                        plateau.combatGagne(uniteSurCase.getIdJoueur());
                         return;
                     }
                 }
