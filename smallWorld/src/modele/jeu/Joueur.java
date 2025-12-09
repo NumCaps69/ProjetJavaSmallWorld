@@ -3,9 +3,9 @@ package modele.jeu;
 public class Joueur {
     private Jeu jeu;
     private int score;
-    //private Unites u;
+    private int id;
 
-    public Joueur(Jeu _jeu) {
+    public Joueur(Jeu _jeu, int id) {
         jeu = _jeu;
         score = 0;
     }
@@ -27,5 +27,12 @@ public class Joueur {
 
     public int getScore(){
         return score;
+    }
+
+    public void ajoutScore(int pt){
+        this.score = pt;
+    }
+    public int getId(){
+        return id;
     }
 }

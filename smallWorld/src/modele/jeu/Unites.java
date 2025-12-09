@@ -17,6 +17,8 @@ public abstract class Unites {
     protected int movement_possible;
     protected int idJoueur;
 
+    public Unites(Case c) {}
+
     public Unites(Plateau _plateau, int nb_unite, int _id_joueur) {
         plateau = _plateau;
         nombre_unite = nb_unite;
@@ -27,6 +29,7 @@ public abstract class Unites {
     public void quitterCase() {
         c.quitterLaCase();
     }
+
     public void allerSurCase(Case _c) {
         if (c != null) {
             c.quitterLaCase();
@@ -34,7 +37,7 @@ public abstract class Unites {
         Unites uniteSurCase = _c.getUnites();
 
         if (uniteSurCase != null) {
-            if (Objects.equals(uniteSurCase.getTypeUnite(), this.getTypeUnite())) {
+            if(this.idJoueur == uniteSurCase.getIdJoueur()) {
                 this.nombre_unite += uniteSurCase.getNombreUnite();
                 _c.quitterLaCase();
             } else {
@@ -47,6 +50,7 @@ public abstract class Unites {
                     if(rand < 9){
                         _c.quitterLaCase();
                         System.out.println(this.getTypeUnite() + " " + this.nombre_unite + " a gagné (1)");
+                        plateau.combatGagne(this.idJoueur);
                     }
                     else{
                         this.nombre_unite = 0;
@@ -58,6 +62,7 @@ public abstract class Unites {
                     if (rand < 5) {
                         _c.quitterLaCase();
                         System.out.println(this.getTypeUnite() + " " + this.nombre_unite + " a gagné (2)");
+                        plateau.combatGagne(this.idJoueur);
                     } else {
                         this.nombre_unite = 0;
                         this.c = null;

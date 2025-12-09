@@ -180,11 +180,11 @@ public class VueControleur extends JFrame implements Observer {
         btnFINTOUR = new JButton("FIN TOUR");
         btnFINTOUR.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                jeu.envoyerCoup(new Coup(null, null));
                 // reset case clic
                 mettreAJourAffichage();
                 caseClic1 = null;
                 caseClic2 = null;
+                jeu.envoyerCoup(new Coup(true));
             }
         });
         JPanel panelPrincipal = new JPanel(new BorderLayout());

@@ -1,8 +1,6 @@
 package modele.plateau;
 
-import modele.jeu.Elfes;
-import modele.jeu.Gobelin;
-import modele.jeu.Unites;
+import modele.jeu.*;
 
 import java.awt.*;
 import java.util.HashMap;

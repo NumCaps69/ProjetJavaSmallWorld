@@ -125,13 +125,12 @@ public class Plateau extends Observable {
         if (obsArrivee != null && !obsArrivee.Traversee()) {
             System.out.println("Case d'arrivée bloquée");
             return false;
+        } else {
+            System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
+                    + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
+            return true;
         }
-        else {
-                System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
-                        + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
-                return true;
-            }
-        }
+    }
 
     public void deplacerUnite(Case c1, Case c2) {
         if (c1 == null || c2 == null) {
@@ -149,63 +148,61 @@ public class Plateau extends Observable {
             System.out.println("Hors plateau...");
             return;
         }
-        if (p1.x != p2.x && p1.y != p2.y){ // gère le cas pour les déplacements en diagonale
+        if (p1.x != p2.x && p1.y != p2.y) { // gère le cas pour les déplacements en diagonale
             System.out.println("Déplacement impossible");
             return;
         }
         c1.nb_unites = unit.getNombreUnite();
         //int d = dist(c1, c2);
         int d = calcDist(c1, c2, c1.getUnites().getMovement_possible());
-        if(d == -1){
+        if (d == -1) {
             System.out.println("Déplacment impossible : Obstacle sur le chemin");
             return;
-        }
-        else if (d == 0) {
+        } else if (d == 0) {
 
             System.out.println("Deplacement impossible, reste sur place");
-        } else if(d<= unit.getMovement_possible()){
+        } else if (d <= unit.getMovement_possible()) {
 
             System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
                     + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
             unit.allerSurCase(c2);
-        } else{
+        } else {
             System.out.println("Déplacement impossible");
 
         }
-
 
 
         setChanged();
         notifyObservers();
     }
 
-    private int calcDist(Case dep, Case arr, int move_possible){
+    private int calcDist(Case dep, Case arr, int move_possible) {
         //case null
-        if( dep == arr){
+        if (dep == arr) {
             return 0;
         }
-        int [][] Grille = new int[SIZE_X][SIZE_Y];
-        for(int i = 0; i < SIZE_X; i++){
-            for(int j = 0; j < SIZE_Y; j++){
+        int[][] Grille = new int[SIZE_X][SIZE_Y];
+        for (int i = 0; i < SIZE_X; i++) {
+            for (int j = 0; j < SIZE_Y; j++) {
                 Grille[i][j] = -1;
             }
         }
         Point debut = map.get(dep);
         Grille[debut.x][debut.y] = 0;
-        for(int l = 0; l < move_possible; l++){
+        for (int l = 0; l < move_possible; l++) {
             boolean test = false;
-            for(int m = 0; m < SIZE_X; m++){
-                for(int n = 0; n < SIZE_Y; n++){
-                    if(Grille[m][n] == l){
-                        traiterVoisin(m, n+1, l+1, Grille, arr);
-                        traiterVoisin(m, n-1, l+1, Grille, arr);
-                        traiterVoisin(m+1, n, l+1, Grille, arr);
-                        traiterVoisin(m-1, n, l+1, Grille, arr);
+            for (int m = 0; m < SIZE_X; m++) {
+                for (int n = 0; n < SIZE_Y; n++) {
+                    if (Grille[m][n] == l) {
+                        traiterVoisin(m, n + 1, l + 1, Grille, arr);
+                        traiterVoisin(m, n - 1, l + 1, Grille, arr);
+                        traiterVoisin(m + 1, n, l + 1, Grille, arr);
+                        traiterVoisin(m - 1, n, l + 1, Grille, arr);
                         test = true;
                     }
                 }
             }
-            if(!test){
+            if (!test) {
                 break;
             }
         }
@@ -214,30 +211,32 @@ public class Plateau extends Observable {
 
 
     }
+
     private void traiterVoisin(int x, int y, int d, int[][] Grille, Case arrivee) {
         if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y) return;
-        if (Grille[x][y] != -1){
+        if (Grille[x][y] != -1) {
             return;
         }
         Case c = grilleCases[x][y];
         boolean estBloque = (c.getObstacle() != null && !c.getObstacle().Traversee());
         if (estBloque) {
             return;
-        }else{
+        } else {
             Grille[x][y] = d;
         }
     }
 
 
-    /** Indique si p est contenu dans la grille
+    /**
+     * Indique si p est contenu dans la grille
      */
     private boolean contenuDansGrille(Point p) {
         return p.x >= 0 && p.x < SIZE_X && p.y >= 0 && p.y < SIZE_Y;
     }
-    
+
     private Case caseALaPosition(Point p) {
         Case retour = null;
-        
+
         if (contenuDansGrille(p)) {
             retour = grilleCases[p.x][p.y];
         }
@@ -247,8 +246,34 @@ public class Plateau extends Observable {
     private int dist(Case c1, Case c2) {
         Point p1 = map.get(c1);
         Point p2 = map.get(c2);
-        if(c1== null || c2 == null) return 0;
-        return Math.abs(p1.x - p2.x)+Math.abs(p1.y - p2.y);
+        if (c1 == null || c2 == null) return 0;
+        return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+    }
+
+    public int calculerScoreCase(int idJoueurActuel) {
+        int pts = 0;
+        for (int x = 0; x < SIZE_X; x++) {
+            for (int y = 0; y < SIZE_Y; y++) {
+                Case c = grilleCases[x][y];
+                Unites u = c.getUnites();
+                if (u != null && u.getIdJoueur() == idJoueurActuel) {
+                    int ptsParCase = 1;
+                    switch (u.getTypeUnite()) {
+                        case "Nain"    -> { if (c.getBiome() == Biome.MOUNTAIN) ptsParCase++; }
+                        case "Elfes"   -> { if (c.getBiome() == Biome.FOREST)   ptsParCase++; }
+                        case "Humain"  -> { if (c.getBiome() == Biome.PLAIN)    ptsParCase++; }
+                        case "Gobelin" -> { if (c.getBiome() == Biome.DESERT)   ptsParCase++; }
+                    }
+                    pts = pts + ptsParCase;
+                }
+            }
+        }
+        return pts;
+    }
+
+    public void combatGagne(int idJ){
+        setChanged();
+        notifyObservers("SCORE : " + idJ);
     }
 
 }

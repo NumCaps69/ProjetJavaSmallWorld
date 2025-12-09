@@ -26,7 +26,7 @@ public class Jeu extends Thread{
         this.nb_joueur = nb_j;
         this.joueurs = new Joueur[nb_joueur];
         for (int i = 0; i < nb_joueur; i++) {
-            joueurs[i] = new Joueur(this);
+            joueurs[i] = new Joueur(this,i);
         }
         start();
 
@@ -71,24 +71,29 @@ public class Jeu extends Thread{
     }
 
     public void jouerPartie() {
-        while(true) {
+        while (true) {
             Joueur joueurActuel = Tour();
             boolean finDeTour = false;
 
             while (!finDeTour) {
                 Coup c = joueurActuel.getCoup();
-                if (c.dep == null && c.arr == null) {
+                if (c.isFinDeTour()) {
                     System.out.println("Fin du tour du joueur " + (indJoueur + 1) + " button");
                     finDeTour = true;
                 } else {
-                    appliquerCoup(c);
+                        appliquerCoup(c);
                 }
+                plateau.notifyObservers();
                 //Calcul des points
+                int ptsSurCase = plateau.calculerScoreCase(joueurActuel.getId());
+                System.out.println("J" + indJoueur + " contrôle " + ptsSurCase + " cases");
+                joueurActuel.ajoutScore(ptsSurCase);
+
+                System.out.println("SCORE TOTAL J" + indJoueur + " : " + joueurActuel.getScore());
+                System.out.println("-------------------------------------------------");
+
             }
 
         }
-
     }
-
-
 }
