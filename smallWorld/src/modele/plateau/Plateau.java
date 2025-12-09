@@ -168,12 +168,15 @@ public class Plateau extends Observable {
         }
         Point p1 = map.get(c1);
         Point p2 = map.get(c2);
+        System.out.println("Tentative de mouvement PD :");
+        System.out.println("Départ : " + p1.x + "," + p1.y);
+        System.out.println("Arrivée : " + p2.x + "," + p2.y);
         if (p1 == null || p2 == null) {
             System.out.println("Hors plateau...");
             return false;
         }
         if (p1.x != p2.x && p1.y != p2.y) { // gère le cas pour les déplacements en diagonale
-            System.out.println("Déplacement impossible");
+            System.out.println("Déplacement impossible diag");
             return false;
         }
         int d = dist(c1, c2);
@@ -235,12 +238,17 @@ public class Plateau extends Observable {
         }
         Point p1 = map.get(c1);
         Point p2 = map.get(c2);
+
+        System.out.println("Tentative de mouvement :");
+        System.out.println("Départ : " + p1.x + "," + p1.y);
+        System.out.println("Arrivée : " + p2.x + "," + p2.y);
+
         if (p1 == null || p2 == null) {
             System.out.println("Hors plateau...");
             return;
         }
         if (p1.x != p2.x && p1.y != p2.y) { // gère le cas pour les déplacements en diagonale
-            System.out.println("Déplacement impossible");
+            System.out.println("Déplacement impossible diag2");
             return;
         }
         c1.nb_unites = unit.getNombreUnite();
