@@ -96,24 +96,59 @@ public class Plateau extends Observable {
         notifyObservers();
     }
     public void genererEvenementBase(){
+        if(cooldownMeteo > 0){
+            System.out.println("evenement en cours : pour encore : " + cooldownMeteo);
+            cooldownMeteo--;
+            setChanged();
+            notifyObservers();
+            return;
+        }
+        else if (cooldownMeteo == 0){
+            System.out.println("reset evenement");
+            resetEvenement();
+            setChanged();
+            notifyObservers();
+        }
         Random rand = new Random();
-        for(int x = 0; x < getSizeX(); x++){
-            for(int y = 0; y < getSizeY(); y++){
-                Case c = grilleCases[x][y];
-                c.setObstacle(grilleCases[x][y].getObstacle());
-                if(rand.nextInt(100) < 20 && c.getBiome().equals(Biome.FOREST)) {
-                    c.setEvent(Evenement.BROUILLARD);
-                } else if (rand.nextInt(100) < 50 && c.getBiome().equals(Biome.FOREST) &&
-                            ((grilleCases[x-1][y].getBiome() == Biome.FOREST) ||
-                        (grilleCases[x+1][y].getBiome() == Biome.FOREST) ||
-                        (grilleCases[x][y-1].getBiome() == Biome.FOREST) ||
-                        (grilleCases[x][y+1].getBiome() == Biome.FOREST))){
-                    c.setEvent(Evenement.BROUILLARD);
+        if (rand.nextInt(100)< 45) {
+            System.out.println("il ne se passe rien");
+            resetEvenement();
+            setChanged();
+            notifyObservers();
+            return;
+        }
+        else {
+            System.out.println("il se passe qqch");
+            resetEvenement();
+            cooldownMeteo = 4; //pdt 4 tours voir plus
+            //alors 55% du temps il se passe du brouuillard
+            for (int x = 0; x < getSizeX(); x++) {
+                for (int y = 0; y < getSizeY(); y++) {
+                    Case c = grilleCases[x][y];
+                    c.setObstacle(grilleCases[x][y].getObstacle());
+                    if (rand.nextInt(100) < 20 && c.getBiome().equals(Biome.FOREST)) {
+                        c.setEvent(Evenement.BROUILLARD);
+                    } else if (rand.nextInt(100) < 50 && c.getBiome().equals(Biome.FOREST) &&
+                            ((grilleCases[x - 1][y].getBiome() == Biome.FOREST) ||
+                                    (grilleCases[x + 1][y].getBiome() == Biome.FOREST) ||
+                                    (grilleCases[x][y - 1].getBiome() == Biome.FOREST) ||
+                                    (grilleCases[x][y + 1].getBiome() == Biome.FOREST))) {
+                        c.setEvent(Evenement.BROUILLARD);
+                    } else {
+                        c.setEvent(Evenement.CALME);
+                    }
                 }
+                setChanged();
+                notifyObservers();
             }
         }
-        setChanged();
-        notifyObservers();
+    }
+    private void resetEvenement() {
+        for (int x = 0; x < getSizeX(); x++) {
+            for (int y = 0; y < getSizeY(); y++) {
+                grilleCases[x][y].setEvent(Evenement.CALME);
+            }
+        }
     }
 
 

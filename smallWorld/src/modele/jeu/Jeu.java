@@ -11,12 +11,13 @@ public class Jeu extends Thread{
     private Joueur[] joueurs;
     protected Coup coupRecu;
     private int indJoueur = -1; //avoir 0 au déb
+    private int tour = 1;
+    private static int MAXT;
 
 
-
-    public Jeu(int nb_j, boolean activer_obs, int max_u, int max_obj) {
+    public Jeu(int nb_j, boolean activer_obs, int max_u, int max_obj, int MAXT) {
         if(nb_j==2){
-            plateau = new Plateau2J(activer_obs);
+            plateau = new Plateau2J(nb_j, activer_obs, max_u, max_obj);
             System.out.print("2 Joueurs !! \n");
             plateau.initialiser();
         }else {
@@ -28,6 +29,7 @@ public class Jeu extends Thread{
         for (int i = 0; i < nb_joueur; i++) {
             joueurs[i] = new Joueur(this,i);
         }
+        this.MAXT = MAXT;
         start();
 
     }
@@ -71,7 +73,7 @@ public class Jeu extends Thread{
     }
 
     public void jouerPartie() {
-        while (true) {
+        while (tour<=MAXT) {
             Joueur joueurActuel = Tour();
             boolean finDeTour = false;
 
