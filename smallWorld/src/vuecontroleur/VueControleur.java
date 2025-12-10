@@ -319,7 +319,6 @@ public class VueControleur extends JFrame implements Observer {
         grilleIP.repaint();
         }
     }
-
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof String) {
