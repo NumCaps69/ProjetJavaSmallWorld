@@ -194,6 +194,21 @@ public class Plateau extends Observable {
         c.setUnites(u, u.getNombreUnite());
     }
 
+    private int calculMouvement(Case c){
+        Unites u = c.getUnites();
+        if (u == null) return 0;
+        int mv = u.getMovement_possible();
+        if (c.getEvent() == Evenement.BROUILLARD) {
+            System.out.println("BROUILLARD !!! Cases dispo réduit à 1");
+            return 1;
+        }
+        if (c.getEvent() == Evenement.CANICULE) {
+            System.out.println("MMMMMMH CANICUUUUUUUULE !!!! Portée réduite de 1");
+            return Math.max(0, mv - 1);
+        }
+        return mv;
+    }
+
     /**
      * Gère le déplacement mais au niveau de l'image d'où le type de la fonction
      * @param c1 la case de départ
@@ -201,67 +216,16 @@ public class Plateau extends Observable {
      * @return true si on peut se déplacer, sinon false
      */
     public boolean peutDeplacer(Case c1, Case c2) {
-        if (c1 == null || c2 == null) {
-            System.out.println("Deux cases vides...");
-            return false;
-        }
-        Unites unit = c1.getUnites();
-        if (unit == null) {
-            System.out.println("unit vide...");
-            return false;
-        }
+        if (c1 == null || c2 == null || c1.getUnites() == null) return false;
         Point p1 = map.get(c1);
         Point p2 = map.get(c2);
-        System.out.println("Tentative de mouvement PD :");
-        System.out.println("Départ : " + p1.x + "," + p1.y);
-        System.out.println("Arrivée : " + p2.x + "," + p2.y);
-        if (p1 == null || p2 == null) {
-            System.out.println("Hors plateau...");
-            return false;
-        }
         if (p1.x != p2.x && p1.y != p2.y) { // gère le cas pour les déplacements en diagonale
             System.out.println("Déplacement impossible diag");
             return false;
         }
-        int d = dist(c1, c2);
-        if (d == 0 || d > unit.getMovement_possible()) {
-            System.out.println("Deplacement impossible, reste sur place");
-            return false;
-        }
-        //Condition de l'obstacle
-        int xDir = Integer.compare(p2.x, p1.x); // Vaut -1, 0 ou 1
-        int yDir = Integer.compare(p2.y, p1.y); // Vaut -1, 0 ou 1
-
-        // On part de la case juste après le départ
-        int x = p1.x + xDir;
-        int y = p1.y + yDir;
-
-        while (x != p2.x || y != p2.y) {
-            Case caseIntermediaire = grilleCases[x][y];
-            Obstacle obs = caseIntermediaire.getObstacle();
-            if (obs != null && !obs.Traversee()) {
-                System.out.println("Chemin bloqué par " + obs.getTypeObstacle() + " en " + x + "," + y);
-                return false;
-            }
-            if (caseIntermediaire.getUnites() != null) {
-                System.out.println("Chemin bloqué par une unité");
-                return false;
-            }
-
-            x += xDir;
-            y += yDir;
-        }
-        //Fin condition de l'obstacle
-
-        Obstacle obsArrivee = c2.getObstacle();
-        if (obsArrivee != null && !obsArrivee.Traversee()) {
-            System.out.println("Case d'arrivée bloquée");
-            return false;
-        } else {
-            System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
-                    + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
-            return true;
-        }
+        int mv = calculMouvement(c1);
+        int d = calcDist(c1,c2,mv);
+        return (d > 0 && d <= mv);
     }
     public boolean IssueHorsObs(int x, int y) {
         // Droite, Gauche, Bas, Haut
@@ -291,26 +255,10 @@ public class Plateau extends Observable {
      */
     public void deplacerUnite(Case c1, Case c2,int qteDeplacement) {
         if (c1 == null || c2 == null || c1.getUnites() == null)  {
-            System.out.println("Deux cases vides...");
+            System.out.println("Cases invalides...");
             return;
         }
 
-        Unites unit = c1.getUnites();
-        int mouvementDispo = unit.getMovement_possible();
-        if (c1.getEvent() == Evenement.BROUILLARD) {
-            System.out.println("BROUILLARD !!! Cases dispo réduit à 1");
-            mouvementDispo = 1;
-        }
-        if (c1.getEvent() == Evenement.CANICULE) {
-            System.out.println("MMMMMMH CANICUUUUUUUULE !!!! Portée réduite de 1");
-            mouvementDispo = Math.max(0, mouvementDispo - 1);
-        }
-
-
-        if (unit == null) {
-            System.out.println("unit vide...");
-            return;
-        }
         Point p1 = map.get(c1);
         Point p2 = map.get(c2);
 
@@ -326,9 +274,9 @@ public class Plateau extends Observable {
             System.out.println("Déplacement impossible diag2");
             return;
         }
-        c1.nb_unites = unit.getNombreUnite();
-        //int d = dist(c1, c2);
-        int d = calcDist(c1, c2, c1.getUnites().getMovement_possible());
+        Unites unit = c1.getUnites();
+        int mv = calculMouvement(c1);
+        int d = calcDist(c1, c2, unit.getMovement_possible());
         if (d == -1) {
             System.out.println("Déplacment impossible : Obstacle sur le chemin");
             return;
@@ -339,10 +287,10 @@ public class Plateau extends Observable {
 
             System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
                     + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
-            if (qteDeplacement >= unit.getNombreUnite()) { // On gère le split des unités
+            if (qteDeplacement >= unit.getNombreUnite()) {
                 c1.setUnites(null, 0);
                 unit.allerSurCase(c2);
-            } else {
+            } else {// On gère le split des unités
                 //On réduit le nombre sur la case de départ
                 int reste = unit.getNombreUnite() - qteDeplacement;
                 unit.setNombreUnite(reste);
@@ -361,8 +309,6 @@ public class Plateau extends Observable {
             System.out.println("Déplacement impossible");
 
         }
-
-
 
     }
 
