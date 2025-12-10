@@ -110,6 +110,7 @@ public class Jeu extends Thread{
         BufferedWriter EcritFichier = new BufferedWriter(new FileWriter(fichier, true));
         EcritFichier.write("<----------->\n");
         EcritFichier.write(String.format(String.format("Partie du : " + DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(LocalDateTime.now()))));
+        EcritFichier.write("\n");
         for(int i = 0; i<score.length; i++){
             EcritFichier.write("Joueur "+ i + " : " + score[i] + "\n");
         }
