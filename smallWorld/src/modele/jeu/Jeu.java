@@ -73,12 +73,26 @@ public class Jeu extends Thread{
     public int getIndJoueur(){
         return indJoueur;
     }
+     public Joueur getJoueur(int index){
+        if(index>=0 && index<nb_joueur){
+            return joueurs[index];
+        }
+        return null;
+     }
+
+     public int getTourActuel(){
+        return tour;
+     }
+
+    public int getTourMAX(){
+        return MAXT;
+    }
 
     public void jouerPartie() {
         while (tour<=MAXT) {
             Joueur joueurActuel = Tour();
             int idActuel = joueurActuel.getId();
-            plateau.notifyObservers();
+            plateau.rafraichirAffichage();
             System.out.println("--- Début du tour de J" + (indJoueur+1) + " ---");
             System.out.println(("Points du joueur " + indJoueur + " : " + joueurActuel.getScore()));
             boolean finDeTour = false;
@@ -104,6 +118,13 @@ public class Jeu extends Thread{
             System.out.println("Gains de ce tour : " + ptsSurCase + " (cases) +" + ptsCombat + " (combat)");
             Joueur j = this.joueurs[idActuel];
             j.ajoutScore(ptsTotal);
+            plateau.rafraichirAffichage();
+
+            try{
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             System.out.println("\n--- ETAT DES SCORES (Tableau complet) ---");
             for(int i=0; i < nb_joueur; i++) {

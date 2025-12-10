@@ -226,8 +226,13 @@ public class VueControleur extends JFrame implements Observer {
     private void mettreAJourAffichage() {
         int id = jeu.getIndJoueur();
         String race = getNomRaceParJoueur(id);
+        modele.jeu.Joueur j = jeu.getJoueur(id);
+        int scoreActuel = (j!=null ? j.getScore() : 0);
+
+        int tourActuel = jeu.getTourActuel();
+        int tourMax = jeu.getTourMAX();
         id+=1;
-        lblInfoJoueur.setText("Tour du Joueur " + id + " : " + race);
+        lblInfoJoueur.setText("Tour " + tourActuel + "/" + tourMax + "  Joueur " + id + " : " + race + "        Score : " + scoreActuel);
 
         switch(id) {
             case 1 -> lblInfoJoueur.setForeground(Color.GREEN);
@@ -273,13 +278,17 @@ public class VueControleur extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        mettreAJourAffichage();
-                    }
-                }); 
-
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    mettreAJourAffichage();
+                    lblInfoJoueur.repaint();
+                    grilleIP.repaint();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

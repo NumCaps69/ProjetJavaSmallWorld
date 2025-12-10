@@ -401,4 +401,8 @@ public class Plateau extends Observable {
         }
         System.out.println("-----------------------\n");
     }
+    public void rafraichirAffichage() {
+        setChanged(); // On dit "Il y a du nouveau !"
+        notifyObservers(); // On prévient la Vue
+    }
 }
