@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2025 BELALEM KAISSE & KITA DJESSY-ALBERTO
+ *
+ * Ce code a été créé dans le cadre du projet LIFAPOO (SmallWorld en JAVA).
+ * Toute copie, modification ou redistribution sans autorisation est interdite.
+ * Tous droits réservés.
  */
 package modele.plateau;
 
