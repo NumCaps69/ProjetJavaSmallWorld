@@ -17,8 +17,13 @@ public abstract class Unites {
     protected int movement_possible;
     protected int idJoueur;
 
-    public Unites(Case c) {}
 
+    /**
+     * Constructeur
+     * @param _plateau le plateau
+     * @param nb_unite le nombre d'unités
+     * @param _id_joueur l'id du joueur qui possède les unités
+     */
     public Unites(Plateau _plateau, int nb_unite, int _id_joueur) {
         plateau = _plateau;
         nombre_unite = nb_unite;
@@ -78,27 +83,16 @@ public abstract class Unites {
         plateau.arriverCase(c, this);
     }
 
-    public Case getCase() {
-        return c;
-    }
-    public void setNombreUnite(int n) {
-        this.nombre_unite = n;
-    }
-    public int getNombreUnite(){
-        return this.nombre_unite;
-    }
-    public int getMovement_possible() {
-        return movement_possible;
-    }
-    public void setMovement_possible( int mv_new){
-        this.movement_possible = mv_new;
-    }
-    public int getIdJoueur() {
-        return idJoueur;
-    }
+
+   /**GETTERS +  SETTERS**/
+    public Case getCase() {return c;}
+    public int getNombreUnite(){return this.nombre_unite;}
+    public int getMovement_possible() {return movement_possible;}
+    public int getIdJoueur() {return idJoueur;}
+    public void setNombreUnite(int n) {this.nombre_unite = n;}
+
+    public void setMovement_possible( int mv_new){this.movement_possible = mv_new;}
     public abstract String getTypeUnite();
-
-
 
 
 

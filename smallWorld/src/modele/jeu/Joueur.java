@@ -5,14 +5,26 @@ public class Joueur {
     private int score;
     private int id;
 
+    /**
+     * Constructeur
+     * @param _jeu le jeu
+     * @param id l'id du joueur
+     */
     public Joueur(Jeu _jeu, int id) {
         jeu = _jeu;
         this.id = id;
         score = 0;
     }
 
+    /**
+     * Ajoute des points au score du joueur
+     * @param pt le nombre de points
+     */
+    public void ajoutScore(int pt){
+        this.score += pt;
+    }
 
-
+    /**GETTERS**/
     public Coup getCoup() {
 
         synchronized (jeu) {
@@ -30,10 +42,5 @@ public class Joueur {
         return score;
     }
 
-    public void ajoutScore(int pt){
-        this.score += pt;
-    }
-    public int getId(){
-        return id;
-    }
+    public int getId(){ return id; }
 }

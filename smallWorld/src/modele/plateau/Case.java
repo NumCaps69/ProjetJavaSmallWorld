@@ -24,7 +24,14 @@ public class Case {
     protected Obstacle o;
     protected Evenement e;
 
+    public Case(Plateau _plateau) {
 
+        plateau = _plateau;
+        nb_unites = 0;
+        u = null;
+        biome = randomBiome();
+        o = null;
+    }
 
     public void quitterLaCase() {
         System.out.println("Appel à la fonction");
@@ -34,52 +41,32 @@ public class Case {
         }
 
     }
-
-
-
-    public Case(Plateau _plateau) {
-
-        plateau = _plateau;
-        nb_unites = 0;
-        u = null;
-        biome = randomBiome();
-        o = null;
-    }
-    public void setUnites(Unites u, int nb) {
-        this.u = u;
-        this.nb_unites = nb;
-    }
-
-    public int getNbUnites() {
-        return nb_unites;
-    }
-
-    public Unites getUnites() {
-        return u;
-    }
-    public Obstacle getObstacle(){
-        return o;
-    }
-    public void setObstacle(Obstacle o) {
-        this.o = o;
-    }
-
-    public Biome getBiome() {
-        return biome;
-    }
-    public void setEvent(Evenement e) {
-        this.e = e;
-    }
-
-    public Evenement getEvent() {
-        return e;
-    }
-
     public Biome randomBiome() {
         rand = new Random();
         Biome [] allBiomes = Biome.values();
         return allBiomes[rand.nextInt(allBiomes.length)];
     }
+
+
+
+
+    /**GETTERS + SETTERS**/
+
+    public int getNbUnites() {return nb_unites;}
+
+    public Unites getUnites() {return u;}
+    public void setUnites(Unites u, int nb) { this.u = u;this.nb_unites = nb;}
+    public Obstacle getObstacle(){return o;}
+    public void setObstacle(Obstacle o) {this.o = o;}
+
+    public Biome getBiome() {return biome;}
+
+    public Evenement getEvent() {return e;}
+    public void setEvent(Evenement e) {
+        this.e = e;
+    }
+
+
 }
 
 

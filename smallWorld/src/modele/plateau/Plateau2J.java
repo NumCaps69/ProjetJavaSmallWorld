@@ -10,6 +10,7 @@ public class Plateau2J extends Plateau{
 
     protected int nb_joueurs;
     protected int max_unite_per_all;
+    private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
 
     public Plateau2J(int nb, boolean activer_obs, int max_u, int max_obj) {
         super(6, 6, activer_obs, max_obj);
@@ -19,7 +20,7 @@ public class Plateau2J extends Plateau{
         max_object = max_obj;
     }
 
-    private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
+
 
 
 

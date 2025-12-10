@@ -25,15 +25,21 @@ public class Plateau extends Observable {
 
 
     private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
+    private HashMap<Integer, Integer> pointsCombatPending = new HashMap<>();
     protected Case[][] grilleCases = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
+//CONSTRUCTEURS
+
+    /**
+     * Constructeur de la classe
+     */
     public Plateau() {
         this(8, 8, false, 0);
         initPlateauVide();
     }
 
     /**
-     * Constructeur de la classe
+     * 2e constructeur de la classe
      * @param x dimension
      * @param y dimension
      * @param activer_obs booléen permettant la mise en place ou non d'obstacles
@@ -48,18 +54,9 @@ public class Plateau extends Observable {
         initPlateauVide();
     }
 
-    public Case[][] getCases() {
-        return grilleCases;
-    }
+//FIN CONSTRUCTEURS
 
-    public int getSizeX() {
-        return SIZE_X;
-    }
-
-    public int getSizeY() {
-        return SIZE_Y;
-    }
-
+//INITIALISATION
     /**
      * Initialise le plateau
      */
@@ -184,6 +181,9 @@ public class Plateau extends Observable {
             }
         }
     }
+//FIN INITIALISATION
+
+// GESTION DES CASES
 
     /**
      * Gère l'unité sur la case d'arrivée
@@ -194,6 +194,52 @@ public class Plateau extends Observable {
         c.setUnites(u, u.getNombreUnite());
     }
 
+    private boolean contenuDansGrille(Point p) {
+        return p.x >= 0 && p.x < SIZE_X && p.y >= 0 && p.y < SIZE_Y;
+    }
+
+        /**
+         * Indique la position sur la grille d'un point P
+         * @param p
+         * @return la case sur laquelle se trouve le point
+         */
+    private Case caseALaPosition(Point p) {
+        Case retour = null;
+
+        if (contenuDansGrille(p)) {
+            retour = grilleCases[p.x][p.y];
+        }
+        return retour;
+    }
+
+
+    /**
+     * Permet la création d'un nouveau groupe d'unités
+     * @param type la race
+     * @param nb le nouveau nombre
+     * @param idJoueur l'id du joueur possédant l'unité
+     * @return le nouveau groupe d'unités
+     */
+    private Unites creerNouvelleUnite(String type, int nb, int idJoueur) {
+        switch (type) {
+            case "Elfes":   return new Elfes(this, 1, nb, idJoueur);
+            case "Gobelin": return new Gobelin(this, 5, nb, idJoueur);
+            case "Nain":    return new Nain(this, 4, nb, idJoueur);
+            case "Humain":  return new Humain(this, 3, nb, idJoueur);
+            default: return null;
+        }
+    }
+
+//FIN GESTION DES CASES
+
+//GESTION DU DEPLACEMENT
+
+
+    /**
+     * Calcule le mouvement de l'unité à partir de sa case
+     * @param c la case où se trouve l'unité
+     * @return le mouvement
+     */
     private int calculMouvement(Case c){
         Unites u = c.getUnites();
         if (u == null) return 0;
@@ -227,25 +273,7 @@ public class Plateau extends Observable {
         int d = calcDist(c1,c2,mv);
         return (d > 0 && d <= mv);
     }
-    public boolean IssueHorsObs(int x, int y) {
-        // Droite, Gauche, Bas, Haut
-        int[] dx = {1, -1, 0, 0};
-        int[] dy = {0, 0, 1, -1};
 
-        for (int i = 0; i < 4; i++) {
-            int voisinX = x + dx[i];
-            int voisinY = y + dy[i];
-
-            if (voisinX >= 0 && voisinX < getSizeX() && voisinY >= 0 && voisinY < getSizeY()) {
-                Case voisin = grilleCases[voisinX][voisinY];
-                Obstacle obs = voisin.getObstacle();
-                if (obs == null || obs.Traversee()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     /**
      * Gère le déplacement mais côté console
@@ -355,6 +383,9 @@ public class Plateau extends Observable {
 
     }
 
+//FIN GESTION DU DEPLACEMENT
+
+//GESTION CONTRAINTES
     /**
      * Vérifie si les cases voisines n'ont pas d'obstacles
      * @param x les lignes de la grille
@@ -364,7 +395,7 @@ public class Plateau extends Observable {
      * @param arrivee la case d'arrivée
      */
 
-    private void traiterVoisin(int x, int y, int d, int[][] Grille, Case arrivee) {
+        private void traiterVoisin(int x, int y, int d, int[][] Grille, Case arrivee) {
         if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y) return;
         if (Grille[x][y] != -1) {
             return;
@@ -376,6 +407,26 @@ public class Plateau extends Observable {
         } else {
             Grille[x][y] = d;
         }
+    }
+
+    public boolean IssueHorsObs(int x, int y) {
+        // Droite, Gauche, Bas, Haut
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
+
+        for (int i = 0; i < 4; i++) {
+            int voisinX = x + dx[i];
+            int voisinY = y + dy[i];
+
+            if (voisinX >= 0 && voisinX < getSizeX() && voisinY >= 0 && voisinY < getSizeY()) {
+                Case voisin = grilleCases[voisinX][voisinY];
+                Obstacle obs = voisin.getObstacle();
+                if (obs == null || obs.Traversee()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -403,31 +454,11 @@ public class Plateau extends Observable {
      * @param p
      * @return true s'il est bien dans la grille, false sinon
      */
-    private boolean contenuDansGrille(Point p) {
-        return p.x >= 0 && p.x < SIZE_X && p.y >= 0 && p.y < SIZE_Y;
-    }
 
-    /**
-     * Indique la position sur la grille d'un point P
-     * @param p
-     * @return la case sur laquelle se trouve le point
-     */
-    private Case caseALaPosition(Point p) {
-        Case retour = null;
+//FIN GESTION CONTRAINTE
 
-        if (contenuDansGrille(p)) {
-            retour = grilleCases[p.x][p.y];
-        }
-        return retour;
-    }
 
-    private int dist(Case c1, Case c2) {
-        Point p1 = map.get(c1);
-        Point p2 = map.get(c2);
-        if (c1 == null || c2 == null) return 0;
-        return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
-    }
-
+//GESTION SCORE
     /**
      * Calcule le score du joueur
      * @param idJoueurActuel l'id du joueur
@@ -455,9 +486,6 @@ public class Plateau extends Observable {
     }
 
 
-
-    private HashMap<Integer, Integer> pointsCombatPending = new HashMap<>();
-
     public void combatGagne(int idJ){
         pointsCombatPending.put(idJ, pointsCombatPending.getOrDefault(idJ, 0) + 1);
         setChanged();
@@ -472,6 +500,7 @@ public class Plateau extends Observable {
         return 0;
     }
 
+//FIN GESTION SCORE
     /**
      * Affiche le plateau mais dans la console (sert pour voir quelles unitées appartiennent à qui
      */
@@ -490,6 +519,7 @@ public class Plateau extends Observable {
         System.out.println("-----------------------\n");
     }
 
+//GESTIONS OBSERVERS
     /**
      * Gère l'envoi d'information de la partie en cours et de la fin à la vue
      */
@@ -502,20 +532,19 @@ public class Plateau extends Observable {
         notifyObservers("FIN_PARTIE:" + messageResultat);
     }
 
-    /**
-     * Permet la création d'un nouveau groupe d'unités
-     * @param type la race
-     * @param nb le nouveau nombre
-     * @param idJoueur l'id du joueur possédant l'unité
-     * @return le nouveau groupe d'unités
-     */
-    private Unites creerNouvelleUnite(String type, int nb, int idJoueur) {
-        switch (type) {
-            case "Elfes":   return new Elfes(this, 1, nb, idJoueur);
-            case "Gobelin": return new Gobelin(this, 5, nb, idJoueur);
-            case "Nain":    return new Nain(this, 4, nb, idJoueur);
-            case "Humain":  return new Humain(this, 3, nb, idJoueur);
-            default: return null;
-        }
+//FIN GESTIONS OBSERVERS
+
+
+    /**GETTERS**/
+    public Case[][] getCases() {
+        return grilleCases;
+    }
+
+    public int getSizeX() {
+        return SIZE_X;
+    }
+
+    public int getSizeY() {
+        return SIZE_Y;
     }
 }
