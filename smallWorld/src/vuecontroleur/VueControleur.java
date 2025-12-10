@@ -41,6 +41,8 @@ public class VueControleur extends JFrame implements Observer {
     private Image icoForet;
     private Image icoWater;
     private Image icoStone;
+    private Image icoBrouillard;
+    private Image icoCanicule;
 
     private JButton btnFINTOUR;
     private JLabel lblInfoJoueur;
@@ -88,6 +90,8 @@ public class VueControleur extends JFrame implements Observer {
         icoMoutain = new ImageIcon("smallWorld/data/terrain/moutain_tile.jpg").getImage();
         icoWater = new ImageIcon("smallWorld/data/terrain/water.png").getImage();
         icoStone = new ImageIcon("smallWorld/data/obstacles/stone_base.png").getImage();
+        icoBrouillard = new ImageIcon("smallWorld/data/evenements/mist_on.png").getImage();
+        icoCanicule = new ImageIcon("smallWorld/data/evenements/canicule_on.png").getImage();
 
         //System.out.println("plain = " + icoPlain.getWidth(null) + "x" + icoPlain.getHeight(null));
         //System.out.println("desert = " + icoDesert.getWidth(null) + "x" + icoDesert.getHeight(null));
@@ -283,9 +287,11 @@ public class VueControleur extends JFrame implements Observer {
                 }
                 Evenement event = c.getEvent();
                 if(event == Evenement.BROUILLARD) {
+                    tabIP[x][y].setEvent(icoBrouillard);
                     tabIP[x][y].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
                 }
                 else if(event == Evenement.CANICULE) {
+                    tabIP[x][y].setEvent(icoCanicule);
                     tabIP[x][y].setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
                 }
                 if (u != null) {

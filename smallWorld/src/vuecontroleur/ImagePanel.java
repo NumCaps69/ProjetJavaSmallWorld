@@ -7,6 +7,7 @@ public class ImagePanel extends JPanel {
     private Image imgBackground;
     private Image imgObstacle;
     private Image imgUnit;
+    private Image imgEvent;
     private String texte = "";
 
     public void setBack(Image _imgBackground) {
@@ -21,6 +22,10 @@ public class ImagePanel extends JPanel {
 
     public void setUnit(Image _imgUnit) {
         imgUnit = _imgUnit;
+        repaint();
+    }
+    public void setEvent(Image _imgEvent) {
+        imgEvent = _imgEvent;
         repaint();
     }
     /*public void setFront(Image _imgFront) {
@@ -57,6 +62,13 @@ public class ImagePanel extends JPanel {
             int x = (getWidth() - w) / 2;
             int y = (getHeight() - h) / 2;
             g.drawImage(imgUnit, x, y, w, h, this);
+        }
+        if (imgEvent != null) {
+            int w = (int) (getWidth() * 0.5);
+            int h = (int) (getHeight() * 0.5);
+            int x = (getWidth() - h) / 2;
+            int y = (getHeight() - h) / 2;
+            g.drawImage(imgEvent, x, y, w, h, this);
         }
         Color c = new Color(getBackground().getRGB());
         int r = 255 - c.getRed();
