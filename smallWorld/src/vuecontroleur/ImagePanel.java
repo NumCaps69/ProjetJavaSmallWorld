@@ -16,38 +16,6 @@ public class ImagePanel extends JPanel {
     private Image imgUnit;
     private Image imgEvent;
     private String texte = "";
-    /** GETTER & SETTER **/
-    public void setBack(Image _imgBackground) {
-        imgBackground = _imgBackground;
-        repaint();
-    }
-
-    public void setObs(Image _imgObstacle) {
-        imgObstacle = _imgObstacle;
-        repaint();
-    }
-
-    public void setUnit(Image _imgUnit) {
-        imgUnit = _imgUnit;
-        repaint();
-    }
-    public void setEvent(Image _imgEvent) {
-        imgEvent = _imgEvent;
-        repaint();
-    }
-    /*public void setFront(Image _imgFront) {
-        imgFront = _imgFront;
-        repaint();
-    }*/
-    public void setTexte(String t) {
-        texte = t;
-        repaint();
-    }
-
-    /**
-     * Paint les composants. GRAPHIQUE
-     * @param g the <code>Graphics</code> object to protect
-     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
