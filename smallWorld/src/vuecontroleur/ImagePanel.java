@@ -64,8 +64,8 @@ public class ImagePanel extends JPanel {
             g.drawImage(imgUnit, x, y, w, h, this);
         }
         if (imgEvent != null) {
-            int w = (int) (getWidth() * 0.5);
-            int h = (int) (getHeight() * 0.5);
+            int w = (int) (getWidth());
+            int h = (int) (getHeight());
             int x = (getWidth() - h) / 2;
             int y = (getHeight() - h) / 2;
             g.drawImage(imgEvent, x, y, w, h, this);
