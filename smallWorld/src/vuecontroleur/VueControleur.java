@@ -278,6 +278,23 @@ public class VueControleur extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        if (arg instanceof String) {
+            String message = (String) arg;
+
+            // Est-ce le message de fin de partie ?
+            if (message.startsWith("FIN_PARTIE:")) {
+                // On retire le préfixe pour garder juste le texte propre
+                String texteFinal = message.substring("FIN_PARTIE:".length());
+
+                // ON AFFICHE LE POPUP ICI (Sur le Thread graphique)
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(this, texteFinal, "Fin de Partie", JOptionPane.INFORMATION_MESSAGE);
+                    // Optionnel : Fermer le jeu après le clic
+                    System.exit(0);
+                });
+                return; // On arrête là, pas besoin de redessiner la grille
+            }
+        }
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
                 @Override

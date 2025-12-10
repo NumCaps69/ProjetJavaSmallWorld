@@ -136,5 +136,40 @@ public class Jeu extends Thread{
                 System.out.println(">>> FIN DU TOUR DE TABLE " + (tour - 1) + " <<<");
             }
         }
+        System.out.println("FIN DE LA PARTIE");
+
+        // On génère le texte
+        String resultat = terminerPartie();
+
+        // On demande au plateau d'envoyer ce texte à la Vue
+        plateau.signalerFinDePartie(resultat);
+    }
+    private String terminerPartie() {
+        StringBuilder res = new StringBuilder();
+        int maxScore = -1;
+        Joueur gagnant = null;
+        boolean egalite = false;
+
+        // Logique de ton ami (inchangée)
+        for (Joueur j : joueurs) {
+            String ligne = "Joueur " + (j.getId() + 1) + " : " + j.getScore() + " points\n";
+            res.append(ligne);
+            if (j.getScore() > maxScore) {
+                maxScore = j.getScore();
+                gagnant = j;
+                egalite = false;
+            } else if (j.getScore() == maxScore) {
+                egalite = true;
+            }
+        }
+
+        String messageFin;
+        if (egalite) {
+            messageFin = "\nMatch Nul ! Égalité parfaite.";
+        } else {
+            messageFin = "\nVICTOIRE DU JOUEUR " + (gagnant.getId() + 1) + " !";
+        }
+
+        return res.toString() + messageFin;
     }
 }

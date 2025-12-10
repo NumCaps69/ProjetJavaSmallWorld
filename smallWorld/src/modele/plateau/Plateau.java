@@ -405,4 +405,9 @@ public class Plateau extends Observable {
         setChanged(); // On dit "Il y a du nouveau !"
         notifyObservers(); // On prévient la Vue
     }
+    public void signalerFinDePartie(String messageResultat) {
+        setChanged();
+        // On envoie le texte complet (arg) à la Vue
+        notifyObservers("FIN_PARTIE:" + messageResultat);
+    }
 }
