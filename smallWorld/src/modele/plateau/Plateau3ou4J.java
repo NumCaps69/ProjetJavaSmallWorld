@@ -27,7 +27,10 @@ public class Plateau3ou4J extends Plateau {
     @Override
     public void initialiser() {
         System.out.println("initialisation du plateau lancée en mode 3 ou 4J");
-        genererPierres();
+        if(activer_obs)
+        {
+            genererPierres();
+        }
         int x_max = getSizeX();
         int y_max = getSizeY();
         // xmin j1 et j2 c'est 0 et leur max c'est le min de j3 et j4
@@ -42,7 +45,7 @@ public class Plateau3ou4J extends Plateau {
             for (int x = 0; x < x_minj3; x++) {
                 for (int y = 0; y < y_minj2; y++) {
                     int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null) {
+                    if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null && IssueHorsObs(x,y) == true) {
                         int rand_u = 0;
                         do{
                             rand_u = new Random().nextInt(8);
@@ -61,7 +64,7 @@ public class Plateau3ou4J extends Plateau {
             for (int x = 0; x < x_minj3; x++) {
                 for (int y = y_minj2+1; y < y_max; y++) {
                     int rand = new Random().nextInt(2);
-                    if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null) {
+                    if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null && IssueHorsObs(x,y) == true) {
                         int rand_u = 0;
                         do{
                             rand_u = new Random().nextInt(8);
@@ -80,7 +83,7 @@ public class Plateau3ou4J extends Plateau {
                 for (int x = x_minj3; x < x_max; x++) {
                     for (int y = y_minj3/2; y < y_max-(y_minj3/2); y++) {
                         int rand = new Random().nextInt(2);
-                        if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null) {
+                        if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null && IssueHorsObs(x,y) == true) {
                             int rand_u = 0;
                             do {
                                 rand_u = new Random().nextInt(8);
@@ -101,7 +104,7 @@ public class Plateau3ou4J extends Plateau {
                 for (int x = x_minj3+1; x < x_max; x++) {
                     for (int y = y_minj3 + 1; y < y_max; y++) {
                         int rand = new Random().nextInt(2);
-                        if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null) {
+                        if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null && IssueHorsObs(x,y) == true) {
                             int rand_u = 0;
                             do {
                                 rand_u = new Random().nextInt(8);
@@ -120,7 +123,7 @@ public class Plateau3ou4J extends Plateau {
                 for (int x = x_minj4+1; x < x_max; x++) {
                     for (int y = 0; y < y_minj3; y++) {
                         int rand = new Random().nextInt(2);
-                        if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null) {
+                        if (rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null && IssueHorsObs(x,y) == true) {
                             int rand_u = 0;
                             do{
                                 rand_u = new Random().nextInt(8);

@@ -26,6 +26,9 @@ public class Plateau2J extends Plateau{
     @Override
     public void initialiser() {
         System.out.println("initialisation du plateau lancée en mode 2J");
+        if(activer_obs){
+            genererPierres();
+        }
         int x_max = getSizeX();
         int y_maxj1 = getSizeY()/2;
         int y_maxj2 = getSizeY();
@@ -35,7 +38,7 @@ public class Plateau2J extends Plateau{
             for (int x = 0; x < x_max; x++) {
                 for (int y = 0; y < y_maxj1; y++) {
                     int rand = new Random().nextInt(2);
-                    if(rand == 0 && unite_pose < max_unite_per_all){
+                    if(rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null && IssueHorsObs(x,y) == true){
                         int rand_u = 0;
                         do{
                             rand_u = new Random().nextInt(8);
@@ -54,7 +57,7 @@ public class Plateau2J extends Plateau{
             for (int x = x_max/2; x < x_max; x++) {
                 for (int y = y_maxj1; y < y_maxj2; y++) {
                     int rand = new Random().nextInt(2);
-                    if(rand == 0 && unite_pose < max_unite_per_all){
+                    if(rand == 0 && unite_pose < max_unite_per_all && grilleCases[x][y].getObstacle() == null && IssueHorsObs(x,y) == true){
                         int rand_u = 0;
                         do{
                             rand_u = new Random().nextInt(8);

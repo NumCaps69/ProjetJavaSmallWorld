@@ -237,6 +237,25 @@ public class Plateau extends Observable {
             return true;
         }
     }
+    public boolean IssueHorsObs(int x, int y) {
+        // Droite, Gauche, Bas, Haut
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
+
+        for (int i = 0; i < 4; i++) {
+            int voisinX = x + dx[i];
+            int voisinY = y + dy[i];
+
+            if (voisinX >= 0 && voisinX < getSizeX() && voisinY >= 0 && voisinY < getSizeY()) {
+                Case voisin = grilleCases[voisinX][voisinY];
+                Obstacle obs = voisin.getObstacle();
+                if (obs == null || obs.Traversee()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public void deplacerUnite(Case c1, Case c2,int qteDeplacement) {
         if (c1 == null || c2 == null || c1.getUnites() == null)  {
