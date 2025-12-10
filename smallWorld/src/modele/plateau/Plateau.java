@@ -31,6 +31,14 @@ public class Plateau extends Observable {
         this(8, 8, false, 0);
         initPlateauVide();
     }
+
+    /**
+     * Constructeur de la classe
+     * @param x dimension
+     * @param y dimension
+     * @param activer_obs booléen permettant la mise en place ou non d'obstacles
+     * @param max_object le maximum d'obstacles posés
+     */
     public Plateau(int x, int y, boolean activer_obs, int max_object) {
         this.SIZE_X = x;
         this.SIZE_Y = y;
@@ -52,7 +60,9 @@ public class Plateau extends Observable {
         return SIZE_Y;
     }
 
-
+    /**
+     * Initialise le plateau
+     */
     private void initPlateauVide() {
         for (int x = 0; x < SIZE_X; x++) {
             for (int y = 0; y < SIZE_Y; y++) {
@@ -63,6 +73,9 @@ public class Plateau extends Observable {
         }
     }
 
+    /**
+     * Initialise les unités sur le plateau
+     */
     public void initialiser() {
 
 
@@ -74,6 +87,10 @@ public class Plateau extends Observable {
         notifyObservers();
 
     }
+
+    /**
+     * Génère les obstacles
+     */
     protected void genererPierres() {
         if (!activer_obs) return;
         int max_obj = 0;
@@ -95,6 +112,10 @@ public class Plateau extends Observable {
         setChanged();
         notifyObservers();
     }
+
+    /**
+     * Génère les événements
+     */
     public void genererEvenementBase(){
         if(cooldownMeteo > 0){
             System.out.println("evenement en cours : pour encore : " + cooldownMeteo);
@@ -111,14 +132,14 @@ public class Plateau extends Observable {
         }
         Random rand = new Random();
         if (rand.nextInt(100)< 45) {
-            System.out.println("il ne se passe rien");
+            System.out.println("Calme");
             resetEvenement();
             setChanged();
             notifyObservers();
             return;
         }
         else {
-            System.out.println("il se passe qqch");
+            System.out.println("EVENT");
             resetEvenement();
             cooldownMeteo = 2; //pdt 4 tours voir plus
             //alors 55% du temps il se passe du brouuillard
@@ -128,21 +149,18 @@ public class Plateau extends Observable {
                     c.setObstacle(grilleCases[x][y].getObstacle());
                     Evenement event = Evenement.CALME;
                     if (c.getBiome() == Biome.FOREST) {
-                        // On utilise la méthode sécurisée ici :
                         boolean voisinForet = aUnVoisinDeType(x, y, Biome.FOREST);
 
-                        // Ta logique : 20% de base OU 50% si voisin forêt
+                        // 20% de base OU 50% si le biome voisin est la forêt
                         if (rand.nextInt(100) < 20 || (voisinForet && rand.nextInt(100) < 50)) {
                             event = Evenement.BROUILLARD;
                         }
                     }
 
                     // --- CANICULE (DESERT) ---
-                    // "else if" pour ne pas avoir deux météos en même temps
                     else if (c.getBiome() == Biome.DESERT) {
-                        // On réutilise la méthode sécurisée pour le désert :
                         boolean voisinDesert = aUnVoisinDeType(x, y, Biome.DESERT);
-
+                        // 20% de base OU 50% si le biome voisin est le désert
                         if (rand.nextInt(100) < 20 || (voisinDesert && rand.nextInt(100) < 50)) {
                             event = Evenement.CANICULE;
                         }
@@ -155,6 +173,10 @@ public class Plateau extends Observable {
             notifyObservers();
         }
     }
+
+    /**
+     * Enlève les événements en cours sur toutes les cases
+     */
     private void resetEvenement() {
         for (int x = 0; x < getSizeX(); x++) {
             for (int y = 0; y < getSizeY(); y++) {
@@ -163,11 +185,21 @@ public class Plateau extends Observable {
         }
     }
 
-
+    /**
+     * Gère l'unité sur la case d'arrivée
+     * @param c la case
+     * @param u l'unité
+     */
     public void arriverCase(Case c, Unites u) {
         c.setUnites(u, u.getNombreUnite());
     }
 
+    /**
+     * Gère le déplacement mais au niveau de l'image d'où le type de la fonction
+     * @param c1 la case de départ
+     * @param c2 la case d'arrivée
+     * @return true si on peut se déplacer, sinon false
+     */
     public boolean peutDeplacer(Case c1, Case c2) {
         if (c1 == null || c2 == null) {
             System.out.println("Deux cases vides...");
@@ -204,18 +236,13 @@ public class Plateau extends Observable {
         int x = p1.x + xDir;
         int y = p1.y + yDir;
 
-        // On avance case par case jusqu'à l'arrivée (incluse)
         while (x != p2.x || y != p2.y) {
             Case caseIntermediaire = grilleCases[x][y];
             Obstacle obs = caseIntermediaire.getObstacle();
-
-            // Si on croise un obstacle infranchissable sur le chemin
             if (obs != null && !obs.Traversee()) {
                 System.out.println("Chemin bloqué par " + obs.getTypeObstacle() + " en " + x + "," + y);
                 return false;
             }
-
-            // On vérifie aussi s'il y a une autre UNITÉ sur le chemin (sauf à l'arrivée car on peut attaquer)
             if (caseIntermediaire.getUnites() != null) {
                 System.out.println("Chemin bloqué par une unité");
                 return false;
@@ -224,9 +251,8 @@ public class Plateau extends Observable {
             x += xDir;
             y += yDir;
         }
+        //Fin condition de l'obstacle
 
-        // 4. Vérification finale de la case d'arrivée (c2)
-        // On refait le check pour l'arrivée spécifiquement (au cas où la boucle while s'arrête juste avant)
         Obstacle obsArrivee = c2.getObstacle();
         if (obsArrivee != null && !obsArrivee.Traversee()) {
             System.out.println("Case d'arrivée bloquée");
@@ -257,6 +283,12 @@ public class Plateau extends Observable {
         return false;
     }
 
+    /**
+     * Gère le déplacement mais côté console
+     * @param c1 la case de départx
+     * @param c2 la case d'arrivée
+     * @param qteDeplacement la quantité d'unité qu'on veut déplacer
+     */
     public void deplacerUnite(Case c1, Case c2,int qteDeplacement) {
         if (c1 == null || c2 == null || c1.getUnites() == null)  {
             System.out.println("Deux cases vides...");
@@ -307,20 +339,18 @@ public class Plateau extends Observable {
 
             System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
                     + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
-            if (qteDeplacement >= unit.getNombreUnite()) {
+            if (qteDeplacement >= unit.getNombreUnite()) { // On gère le split des unités
                 c1.setUnites(null, 0);
                 unit.allerSurCase(c2);
             } else {
-                // 1. On réduit le nombre sur la case de départ
+                //On réduit le nombre sur la case de départ
                 int reste = unit.getNombreUnite() - qteDeplacement;
                 unit.setNombreUnite(reste);
 
-                // 2. On crée un NOUVEAU groupe pour l'armée qui part
+                // Création du groupe qui part
                 Unites detachement = creerNouvelleUnite(unit.getTypeUnite(), qteDeplacement, unit.getIdJoueur());
 
                 if (detachement != null) {
-                    // 3. On envoie ce détachement vers l'arrivée
-                    // (allerSurCase gère déjà le combat ou la fusion à l'arrivée)
                     detachement.allerSurCase(c2);
                 }
             }
@@ -336,6 +366,13 @@ public class Plateau extends Observable {
 
     }
 
+    /**
+     * Calcule la distance pour le déplacement avec les Point
+     * @param dep case de départ
+     * @param arr case d'arrivée
+     * @param move_possible le mouvement de l'unité
+     * @return la distance en int
+     */
     private int calcDist(Case dep, Case arr, int move_possible) {
         //case null
         if (dep == arr) {
@@ -372,6 +409,15 @@ public class Plateau extends Observable {
 
     }
 
+    /**
+     * Vérifie si les cases voisines n'ont pas d'obstacles
+     * @param x les lignes de la grille
+     * @param y les colonnes de la grille
+     * @param d la distance
+     * @param Grille la grille
+     * @param arrivee la case d'arrivée
+     */
+
     private void traiterVoisin(int x, int y, int d, int[][] Grille, Case arrivee) {
         if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y) return;
         if (Grille[x][y] != -1) {
@@ -386,19 +432,20 @@ public class Plateau extends Observable {
         }
     }
 
+    /**
+     * Vérifie si le biome des cases voisines correspond au biome pour les événements dans notre cas
+     * @param x
+     * @param y
+     * @param biomeCherche
+     * @return true s'il correspond au biome, false sinon
+     */
     private boolean aUnVoisinDeType(int x, int y, Biome biomeCherche) { // pour gérer les événements
-        // Voisin GAUCHE (x-1)
-        // On vérifie d'abord "x > 0" pour ne pas sortir du tableau
         if (x > 0 && grilleCases[x - 1][y].getBiome() == biomeCherche) return true;
 
-        // Voisin DROITE (x+1)
-        // On vérifie "x < SIZE_X - 1"
         if (x < SIZE_X - 1 && grilleCases[x + 1][y].getBiome() == biomeCherche) return true;
 
-        // Voisin HAUT (y-1)
         if (y > 0 && grilleCases[x][y - 1].getBiome() == biomeCherche) return true;
 
-        // Voisin BAS (y+1)
         if (y < SIZE_Y - 1 && grilleCases[x][y + 1].getBiome() == biomeCherche) return true;
 
         return false;
@@ -407,11 +454,18 @@ public class Plateau extends Observable {
 
     /**
      * Indique si p est contenu dans la grille
+     * @param p
+     * @return true s'il est bien dans la grille, false sinon
      */
     private boolean contenuDansGrille(Point p) {
         return p.x >= 0 && p.x < SIZE_X && p.y >= 0 && p.y < SIZE_Y;
     }
 
+    /**
+     * Indique la position sur la grille d'un point P
+     * @param p
+     * @return la case sur laquelle se trouve le point
+     */
     private Case caseALaPosition(Point p) {
         Case retour = null;
 
@@ -428,6 +482,11 @@ public class Plateau extends Observable {
         return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
     }
 
+    /**
+     * Calcule le score du joueur
+     * @param idJoueurActuel l'id du joueur
+     * @return le score
+     */
     public int calculerScoreCase(int idJoueurActuel) {
         int score = 0;
         for (int x = 0; x < SIZE_X; x++) {
@@ -466,6 +525,10 @@ public class Plateau extends Observable {
         }
         return 0;
     }
+
+    /**
+     * Affiche le plateau mais dans la console (sert pour voir quelles unitées appartiennent à qui
+     */
     public void debugQuiPossedeQuoi() {
         System.out.println("\n--- SCAN DU PLATEAU ---");
         for (int x = 0; x < SIZE_X; x++) {
@@ -480,16 +543,26 @@ public class Plateau extends Observable {
         }
         System.out.println("-----------------------\n");
     }
+
+    /**
+     * Gère l'envoi d'information de la partie en cours et de la fin à la vue
+     */
     public void rafraichirAffichage() {
-        setChanged(); // On dit "Il y a du nouveau !"
-        notifyObservers(); // On prévient la Vue
+        setChanged();
+        notifyObservers();
     }
     public void signalerFinDePartie(String messageResultat) {
         setChanged();
-        // On envoie le texte complet (arg) à la Vue
         notifyObservers("FIN_PARTIE:" + messageResultat);
     }
 
+    /**
+     * Permet la création d'un nouveau groupe d'unités
+     * @param type la race
+     * @param nb le nouveau nombre
+     * @param idJoueur l'id du joueur possédant l'unité
+     * @return le nouveau groupe d'unités
+     */
     private Unites creerNouvelleUnite(String type, int nb, int idJoueur) {
         switch (type) {
             case "Elfes":   return new Elfes(this, 1, nb, idJoueur);
