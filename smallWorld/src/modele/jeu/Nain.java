@@ -7,7 +7,7 @@ public class Nain extends Unites{
     protected Biome biome_favori;
     /**
      * Constructeur
-     * @param _plateau
+     * @param _plateau le plateau
      * @param mv le nombre de cases que peut parcourir l'unité
      * @param nb_u le nombre d'unités
      * @param idJoueur l'id du joueur qui le possède

@@ -20,7 +20,13 @@ public class Jeu extends Thread{
     private static int MAXT;
 
 
-
+    /**
+     * Constructeur
+     * @param nb_j Nombre de joueurs en nb entier
+     * @param activer_obs booléen qui active ou non les obstacles
+     * @param max_u Nombre d'unités maximum
+     * @param MAXT Nombre de tours maximum par partie
+     */
     public Jeu(int nb_j, boolean activer_obs, int max_u, int MAXT) {
         if(nb_j==2){
             plateau = new Plateau2J(nb_j,activer_obs,max_u,MAXT );
@@ -40,10 +46,10 @@ public class Jeu extends Thread{
         start();
 
     }
-
-    public Plateau getPlateau() {
-        return plateau;
-    }
+    /**
+     * Fonction envoyer coup qui modifie la variable coupRecu
+     * @param c Le coup
+     */
 
     public void envoyerCoup(Coup c) {
         coupRecu = c;
@@ -53,7 +59,10 @@ public class Jeu extends Thread{
         }
 
     }
-
+    /**
+     * Fonction appliquerCoup qui va utiliser la fonctin pour déplacer l'unite voir faire un combat
+     * @param coup Le coup
+     */
 
     public void appliquerCoup(Coup coup) {
         if (coup.dep == null && coup.arr == null) {
@@ -64,33 +73,30 @@ public class Jeu extends Thread{
         plateau.deplacerUnite(coup.dep, coup.arr,coup.getNombreUnites());
 
     }
+    /**
+     * Fonction run lançant jouer partie
+     */
 
 
     public void run() {
         jouerPartie();
     }
+    /**
+     * Fonction Tour renvoyant un Joueur en fonction du tour
+     * @return Joueur
+     */
 
     private Joueur Tour(){
         indJoueur = (indJoueur+1) % nb_joueur;
         System.out.println(indJoueur);
         return joueurs[indJoueur];
     }
-    public int getIndJoueur(){
-        return indJoueur;
-    }
-    public Joueur getJoueur(int index){
-        if(index>=0 && index<nb_joueur){
-            return joueurs[index];
-        }
-        return null;
-     }
-     public int getTourActuel(){
-        return tour;
-     }
 
-    public int getTourMAX(){
-        return MAXT;
-    }
+    /**
+     * Fonction sauvegarderScore qui enregistrer d'un fichier Score.txt le score de tous les joueurs pour chaque partie terminée
+     * @param score
+     * @throws IOException
+     */
 
     public void sauvegarderScore(int[] score) throws IOException {
         String fichier = "Score.txt";
@@ -103,6 +109,10 @@ public class Jeu extends Thread{
         EcritFichier.write("<----------->\n");
         EcritFichier.close();
     }
+
+    /**
+     * Fonction jouerPartie() qui joue la partie tour apr tour et raffraichit l'affichage et calculer les points de tous
+     */
 
 
     public void jouerPartie() {
@@ -171,6 +181,11 @@ public class Jeu extends Thread{
             System.err.println("Erreur lors de la sauvegarde du score : " + e.getMessage());
         }
     }
+
+    /**
+     * Fonction qui renvoie le string à afficher en fin de partie
+     * @return String
+     */
     private String terminerPartie() {
         StringBuilder res = new StringBuilder();
         int maxScore = -1;
@@ -198,5 +213,25 @@ public class Jeu extends Thread{
         }
 
         return res.toString() + messageFin;
+    }
+    /** GETTER**/
+    public int getIndJoueur(){
+        return indJoueur;
+    }
+    public Joueur getJoueur(int index){
+        if(index>=0 && index<nb_joueur){
+            return joueurs[index];
+        }
+        return null;
+    }
+    public int getTourActuel(){
+        return tour;
+    }
+
+    public int getTourMAX(){
+        return MAXT;
+    }
+    public Plateau getPlateau() {
+        return plateau;
     }
 }

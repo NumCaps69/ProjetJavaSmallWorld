@@ -9,7 +9,7 @@ public class ImagePanel extends JPanel {
     private Image imgUnit;
     private Image imgEvent;
     private String texte = "";
-
+    /** GETTER & SETTER **/
     public void setBack(Image _imgBackground) {
         imgBackground = _imgBackground;
         repaint();
@@ -37,6 +37,10 @@ public class ImagePanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Paint les composants. GRAPHIQUE
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

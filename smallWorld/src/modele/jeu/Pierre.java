@@ -19,6 +19,7 @@ public class Pierre extends Obstacle{
     @Override
     /**
      * Vérifie si on peut passer l'obstacle
+     * @return Booléen
      */
     public boolean Traversee() {
         return possible_passage;

@@ -37,7 +37,6 @@ public class Joueur {
 
         return jeu.coupRecu;
     }
-
     public int getScore(){
         return score;
     }

@@ -3,6 +3,7 @@ package modele.jeu;
 import modele.plateau.Case;
 import modele.plateau.Plateau;
 
+
 public abstract class Obstacle {
     protected Case c;
     protected Plateau plateau;

@@ -31,9 +31,18 @@ public abstract class Unites {
         idJoueur = _id_joueur;
     }
 
+    /**
+     * Fonction qui permet de quitter la case de cette classe
+     */
+
     public void quitterCase() {
         c.quitterLaCase();
     }
+
+    /**
+     * Fonction qui permet de se rendre sur une case en question en y faisant les modifications necéssaire
+     * @param _c Case
+     */
 
     public void allerSurCase(Case _c) {
         if (c != null) {
@@ -84,7 +93,7 @@ public abstract class Unites {
     }
 
 
-   /**GETTERS +  SETTERS**/
+   /**GETTERS + SETTERS**/
     public Case getCase() {return c;}
     public int getNombreUnite(){return this.nombre_unite;}
     public int getMovement_possible() {return movement_possible;}

@@ -409,6 +409,13 @@ public class Plateau extends Observable {
         }
     }
 
+    /**
+     * Véifie qu'il y ait au moins un voisin d'une case unité vide afin que l'unité en quetion puisse se déplacer et ne pas être bloqué (être entouré d'obstacles)
+     * @param x int
+     * @param y int
+     * @return Booléen
+     */
+
     public boolean IssueHorsObs(int x, int y) {
         // Droite, Gauche, Bas, Haut
         int[] dx = {1, -1, 0, 0};
@@ -431,9 +438,9 @@ public class Plateau extends Observable {
 
     /**
      * Vérifie si le biome des cases voisines correspond au biome pour les événements dans notre cas
-     * @param x
-     * @param y
-     * @param biomeCherche
+     * @param x int
+     * @param y int
+     * @param biomeCherche Biome
      * @return true s'il correspond au biome, false sinon
      */
     private boolean aUnVoisinDeType(int x, int y, Biome biomeCherche) { // pour gérer les événements
@@ -485,6 +492,10 @@ public class Plateau extends Observable {
         return score;
     }
 
+    /**
+     * Fonction faisant gagner un combat)
+     * @param idJ entier id du joueur
+     */
 
     public void combatGagne(int idJ){
         pointsCombatPending.put(idJ, pointsCombatPending.getOrDefault(idJ, 0) + 1);
@@ -502,7 +513,8 @@ public class Plateau extends Observable {
 
 //FIN GESTION SCORE
     /**
-     * Affiche le plateau mais dans la console (sert pour voir quelles unitées appartiennent à qui
+     * Affiche le plateau mais dans la console (sert pour voir quelles unitées appartiennent à qui)
+     *
      */
     public void debugQuiPossedeQuoi() {
         System.out.println("\n--- SCAN DU PLATEAU ---");

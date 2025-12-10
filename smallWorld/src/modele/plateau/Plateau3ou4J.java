@@ -12,6 +12,13 @@ public class Plateau3ou4J extends Plateau {
     protected int nb_joueurs;
     protected int max_unite_per_all;
 
+    /**
+     * Contructeur
+     * @param nb nombre joueurs
+     * @param activer_obs booléen obstacles
+     * @param max_u entier max unite par joueurs
+     * @param max_obj entier max obstacles sur le plateau
+     */
     public Plateau3ou4J(int nb, boolean activer_obs, int max_u, int max_obj) {
         super(7, 7, activer_obs, max_obj);
         nb_joueurs = nb;
@@ -22,7 +29,9 @@ public class Plateau3ou4J extends Plateau {
 
     private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
 
-
+    /**
+     * Fonction d'initialisation du plateau à 3 ou 4 joueurs
+     */
 
     @Override
     public void initialiser() {

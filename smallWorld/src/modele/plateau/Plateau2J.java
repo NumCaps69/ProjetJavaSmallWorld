@@ -12,6 +12,13 @@ public class Plateau2J extends Plateau{
     protected int max_unite_per_all;
     private HashMap<Case, Point> map = new HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
 
+    /**
+     * Constructeur
+     * @param nb entier nb de joueurs
+     * @param activer_obs booléenne activation d'obstacles
+     * @param max_u entier max unité par joueur
+     * @param max_obj entier max obstacles
+     */
     public Plateau2J(int nb, boolean activer_obs, int max_u, int max_obj) {
         super(6, 6, activer_obs, max_obj);
         nb_joueurs = nb;
@@ -21,9 +28,9 @@ public class Plateau2J extends Plateau{
     }
 
 
-
-
-
+    /**
+     * Fonction d'initialisation du plateau à 2 joueurs
+     */
     @Override
     public void initialiser() {
         System.out.println("initialisation du plateau lancée en mode 2J");
