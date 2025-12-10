@@ -63,6 +63,10 @@ public class VueControleur extends JFrame implements Observer {
     private ImagePanel[][] tabIP; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône background et front, suivant ce qui est présent dans le modèle)
 
 
+    /**
+     * Constructeur de la vue
+     * @param _jeu
+     */
     public VueControleur(Jeu _jeu) {
         jeu = _jeu;
         plateau = jeu.getPlateau();

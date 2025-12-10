@@ -94,4 +94,30 @@ public class ImagePanel extends JPanel {
         int y = getHeight() - 5;
         g.drawString(texte, x, y);
     }
+
+    /**SETTERS**/
+    public void setBack(Image _imgBackground) {
+        imgBackground = _imgBackground;
+        repaint();
+    }
+
+    public void setObs(Image _imgObstacle) {
+        imgObstacle = _imgObstacle;
+        repaint();
+    }
+
+    public void setUnit(Image _imgUnit) {
+        imgUnit = _imgUnit;
+        repaint();
+    }
+    public void setEvent(Image _imgEvent) {
+        imgEvent = _imgEvent;
+        repaint();
+    }
+    public void setTexte(String t) {
+        texte = t;
+        repaint();
+    }
+
+
 }
