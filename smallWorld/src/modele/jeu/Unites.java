@@ -90,6 +90,9 @@ public abstract class Unites {
     public int getMovement_possible() {
         return movement_possible;
     }
+    public void setMovement_possible( int mv_new){
+        this.movement_possible = mv_new;
+    }
     public int getIdJoueur() {
         return idJoueur;
     }
