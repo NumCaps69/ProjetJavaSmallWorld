@@ -120,27 +120,39 @@ public class Plateau extends Observable {
         else {
             System.out.println("il se passe qqch");
             resetEvenement();
-            cooldownMeteo = 4; //pdt 4 tours voir plus
+            cooldownMeteo = 2; //pdt 4 tours voir plus
             //alors 55% du temps il se passe du brouuillard
             for (int x = 0; x < getSizeX(); x++) {
                 for (int y = 0; y < getSizeY(); y++) {
                     Case c = grilleCases[x][y];
                     c.setObstacle(grilleCases[x][y].getObstacle());
-                    if (rand.nextInt(100) < 20 && c.getBiome().equals(Biome.FOREST)) {
-                        c.setEvent(Evenement.BROUILLARD);
-                    } else if (rand.nextInt(100) < 50 && c.getBiome().equals(Biome.FOREST) &&
-                            ((grilleCases[x - 1][y].getBiome() == Biome.FOREST) ||
-                                    (grilleCases[x + 1][y].getBiome() == Biome.FOREST) ||
-                                    (grilleCases[x][y - 1].getBiome() == Biome.FOREST) ||
-                                    (grilleCases[x][y + 1].getBiome() == Biome.FOREST))) {
-                        c.setEvent(Evenement.BROUILLARD);
-                    } else {
-                        c.setEvent(Evenement.CALME);
+                    Evenement event = Evenement.CALME;
+                    if (c.getBiome() == Biome.FOREST) {
+                        // On utilise la méthode sécurisée ici :
+                        boolean voisinForet = aUnVoisinDeType(x, y, Biome.FOREST);
+
+                        // Ta logique : 20% de base OU 50% si voisin forêt
+                        if (rand.nextInt(100) < 20 || (voisinForet && rand.nextInt(100) < 50)) {
+                            event = Evenement.BROUILLARD;
+                        }
                     }
+
+                    // --- CANICULE (DESERT) ---
+                    // "else if" pour ne pas avoir deux météos en même temps
+                    else if (c.getBiome() == Biome.DESERT) {
+                        // On réutilise la méthode sécurisée pour le désert :
+                        boolean voisinDesert = aUnVoisinDeType(x, y, Biome.DESERT);
+
+                        if (rand.nextInt(100) < 20 || (voisinDesert && rand.nextInt(100) < 50)) {
+                            event = Evenement.CANICULE;
+                        }
+                    }
+
+                    c.setEvent(event);
                 }
-                setChanged();
-                notifyObservers();
             }
+            setChanged();
+            notifyObservers();
         }
     }
     private void resetEvenement() {
@@ -234,8 +246,15 @@ public class Plateau extends Observable {
 
         Unites unit = c1.getUnites();
         int mouvementDispo = unit.getMovement_possible();
-        if (c1.getEvent() == Evenement.BROUILLARD) mouvementDispo = 1;
-        if (c1.getEvent() == Evenement.CANICULE) mouvementDispo = Math.max(0, mouvementDispo - 1);
+        if (c1.getEvent() == Evenement.BROUILLARD) {
+            System.out.println("BROUILLARD !!! Cases dispo réduit à 1");
+            mouvementDispo = 1;
+        }
+        if (c1.getEvent() == Evenement.CANICULE) {
+            System.out.println("MMMMMMH CANICUUUUUUUULE !!!! Portée réduite de 1");
+            mouvementDispo = Math.max(0, mouvementDispo - 1);
+        }
+
 
         if (unit == null) {
             System.out.println("unit vide...");
@@ -346,6 +365,24 @@ public class Plateau extends Observable {
         } else {
             Grille[x][y] = d;
         }
+    }
+
+    private boolean aUnVoisinDeType(int x, int y, Biome biomeCherche) { // pour gérer les événements
+        // Voisin GAUCHE (x-1)
+        // On vérifie d'abord "x > 0" pour ne pas sortir du tableau
+        if (x > 0 && grilleCases[x - 1][y].getBiome() == biomeCherche) return true;
+
+        // Voisin DROITE (x+1)
+        // On vérifie "x < SIZE_X - 1"
+        if (x < SIZE_X - 1 && grilleCases[x + 1][y].getBiome() == biomeCherche) return true;
+
+        // Voisin HAUT (y-1)
+        if (y > 0 && grilleCases[x][y - 1].getBiome() == biomeCherche) return true;
+
+        // Voisin BAS (y+1)
+        if (y < SIZE_Y - 1 && grilleCases[x][y + 1].getBiome() == biomeCherche) return true;
+
+        return false;
     }
 
 

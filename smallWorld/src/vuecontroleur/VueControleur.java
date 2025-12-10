@@ -13,6 +13,7 @@ import modele.jeu.Jeu;
 import modele.jeu.Unites;
 import modele.plateau.Biome;
 import modele.plateau.Case;
+import modele.plateau.Evenement;
 import modele.plateau.Plateau;
 import modele.jeu.Obstacle;
 import modele.jeu.Pierre;
@@ -172,7 +173,7 @@ public class VueControleur extends JFrame implements Observer {
                             // Si on a plus de 1 unité, on demande
                             if (nbTotal > 1) {
                                 String reponse = JOptionPane.showInputDialog(null,
-                                        "Combien d'unités déplacer ? (Max " + nbTotal + ")",
+                                        "Combien d'unités à déplacer ? (Max " + nbTotal + ")",
                                         "Division des troupes", JOptionPane.QUESTION_MESSAGE);
 
                                 try {
@@ -279,6 +280,13 @@ public class VueControleur extends JFrame implements Observer {
                         case "Pierre" -> tabIP[x][y].setObs(icoStone);
                         // d'obj a set
                     }
+                }
+                Evenement event = c.getEvent();
+                if(event == Evenement.BROUILLARD) {
+                    tabIP[x][y].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+                }
+                else if(event == Evenement.CANICULE) {
+                    tabIP[x][y].setBorder(BorderFactory.createLineBorder(Color.ORANGE, 2));
                 }
                 if (u != null) {
                     tabIP[x][y].setTexte(u.getNombreUnite() + "");

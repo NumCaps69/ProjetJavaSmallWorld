@@ -134,14 +134,13 @@ public class Jeu extends Thread{
             if(indJoueur == nb_joueur-1) {
                 tour++;
                 System.out.println(">>> FIN DU TOUR DE TABLE " + (tour - 1) + " <<<");
+                plateau.genererEvenementBase();
             }
         }
         System.out.println("FIN DE LA PARTIE");
 
-        // On génère le texte
         String resultat = terminerPartie();
 
-        // On demande au plateau d'envoyer ce texte à la Vue
         plateau.signalerFinDePartie(resultat);
     }
     private String terminerPartie() {
