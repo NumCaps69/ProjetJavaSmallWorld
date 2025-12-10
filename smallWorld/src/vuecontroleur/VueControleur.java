@@ -166,7 +166,26 @@ public class VueControleur extends JFrame implements Observer {
                                 return;
                             }
                             caseClic2 = plateau.getCases()[xx][yy];
-                            jeu.envoyerCoup(new Coup(caseClic1, caseClic2));
+                            int nbTotal = caseClic1.getUnites().getNombreUnite();
+                            int nbADeplacer = nbTotal; // Par défaut tout
+
+                            // Si on a plus de 1 unité, on demande
+                            if (nbTotal > 1) {
+                                String reponse = JOptionPane.showInputDialog(null,
+                                        "Combien d'unités déplacer ? (Max " + nbTotal + ")",
+                                        "Division des troupes", JOptionPane.QUESTION_MESSAGE);
+
+                                try {
+                                    int saisie = Integer.parseInt(reponse);
+                                    // On borne la saisie entre 1 et le max
+                                    if (saisie > 0 && saisie < nbTotal) {
+                                        nbADeplacer = saisie;
+                                    }
+                                } catch (NumberFormatException ex) {
+                                    // Si le joueur écrit n'importe quoi, on déplace tout par défaut
+                                }
+                            }
+                            jeu.envoyerCoup(new Coup(caseClic1, caseClic2,nbADeplacer));
                             caseClic1 = null;
                             caseClic2 = null;
                         }

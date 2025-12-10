@@ -80,11 +80,6 @@ public class Case {
         Biome [] allBiomes = Biome.values();
         return allBiomes[rand.nextInt(allBiomes.length)];
     }
-    /*public void caseAccessible(Case c, int end, ArrayList<Case> l){
-        if(end>0){
-            end -=1;
-            caseAccessible(c.)
-        }*/
-    }
+}
 
 

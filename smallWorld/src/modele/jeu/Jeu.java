@@ -56,7 +56,7 @@ public class Jeu extends Thread{
             System.out.println("Fin du tour du joueur " + indJoueur);
             return;
         }
-        plateau.deplacerUnite(coup.dep, coup.arr);
+        plateau.deplacerUnite(coup.dep, coup.arr,coup.getNombreUnites());
 
     }
 

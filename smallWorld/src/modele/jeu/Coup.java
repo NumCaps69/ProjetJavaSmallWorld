@@ -6,10 +6,12 @@ public class Coup {
     protected Case dep;
     protected Case arr;
     public boolean finDeTour;
-    public Coup(Case _dep, Case _arr) {
+    private int nbUnites;
+    public Coup(Case _dep, Case _arr, int nb) {
         dep = _dep;
         arr = _arr;
         finDeTour = false;
+        this.nbUnites = nb;
     }
     public Coup(boolean fin){
         this.finDeTour = fin;
@@ -25,4 +27,5 @@ public class Coup {
     public Case getArr() {
         return arr;
     }
+    public int getNombreUnites() { return nbUnites; }
 }

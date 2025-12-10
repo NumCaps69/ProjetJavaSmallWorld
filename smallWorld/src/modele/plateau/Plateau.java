@@ -226,12 +226,17 @@ public class Plateau extends Observable {
         }
     }
 
-    public void deplacerUnite(Case c1, Case c2) {
-        if (c1 == null || c2 == null) {
+    public void deplacerUnite(Case c1, Case c2,int qteDeplacement) {
+        if (c1 == null || c2 == null || c1.getUnites() == null)  {
             System.out.println("Deux cases vides...");
             return;
         }
+
         Unites unit = c1.getUnites();
+        int mouvementDispo = unit.getMovement_possible();
+        if (c1.getEvent() == Evenement.BROUILLARD) mouvementDispo = 1;
+        if (c1.getEvent() == Evenement.CANICULE) mouvementDispo = Math.max(0, mouvementDispo - 1);
+
         if (unit == null) {
             System.out.println("unit vide...");
             return;
@@ -264,15 +269,33 @@ public class Plateau extends Observable {
 
             System.out.println("Déplacement autorisé : " + unit.getTypeUnite()
                     + " se déplace de " + d + " cases (Max: " + unit.getMovement_possible() + ")");
-            unit.allerSurCase(c2);
-        } else {
+            if (qteDeplacement >= unit.getNombreUnite()) {
+                c1.setUnites(null, 0);
+                unit.allerSurCase(c2);
+            } else {
+                // 1. On réduit le nombre sur la case de départ
+                int reste = unit.getNombreUnite() - qteDeplacement;
+                unit.setNombreUnite(reste);
+
+                // 2. On crée un NOUVEAU groupe pour l'armée qui part
+                Unites detachement = creerNouvelleUnite(unit.getTypeUnite(), qteDeplacement, unit.getIdJoueur());
+
+                if (detachement != null) {
+                    // 3. On envoie ce détachement vers l'arrivée
+                    // (allerSurCase gère déjà le combat ou la fusion à l'arrivée)
+                    detachement.allerSurCase(c2);
+                }
+            }
+            setChanged();
+            notifyObservers();
+        }
+        else {
             System.out.println("Déplacement impossible");
 
         }
 
 
-        setChanged();
-        notifyObservers();
+
     }
 
     private int calcDist(Case dep, Case arr, int move_possible) {
@@ -409,5 +432,15 @@ public class Plateau extends Observable {
         setChanged();
         // On envoie le texte complet (arg) à la Vue
         notifyObservers("FIN_PARTIE:" + messageResultat);
+    }
+
+    private Unites creerNouvelleUnite(String type, int nb, int idJoueur) {
+        switch (type) {
+            case "Elfes":   return new Elfes(this, 1, nb, idJoueur);
+            case "Gobelin": return new Gobelin(this, 5, nb, idJoueur);
+            case "Nain":    return new Nain(this, 4, nb, idJoueur);
+            case "Humain":  return new Humain(this, 3, nb, idJoueur);
+            default: return null;
+        }
     }
 }
