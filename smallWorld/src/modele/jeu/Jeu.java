@@ -95,10 +95,12 @@ public class Jeu extends Thread{
     public void sauvegarderScore(int[] score) throws IOException {
         String fichier = "Score.txt";
         BufferedWriter EcritFichier = new BufferedWriter(new FileWriter(fichier, true));
+        EcritFichier.write("<----------->\n");
         EcritFichier.write(String.format(String.format("Partie du : " + DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(LocalDateTime.now()))));
         for(int i = 0; i<score.length; i++){
-            EcritFichier.write("Joueur "+ i + " : " + score[i]);
+            EcritFichier.write("Joueur "+ i + " : " + score[i] + "\n");
         }
+        EcritFichier.write("<----------->\n");
         EcritFichier.close();
     }
 
@@ -157,6 +159,17 @@ public class Jeu extends Thread{
         String resultat = terminerPartie();
 
         plateau.signalerFinDePartie(resultat);
+        int[] scoresFinal = new int[nb_joueur];
+
+        for (int i = 0; i < nb_joueur; i++) {
+            scoresFinal[i] = joueurs[i].getScore();
+        }
+        try {
+            sauvegarderScore(scoresFinal);
+            System.out.println(">> Scores sauvegardés dans Score.txt");
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la sauvegarde du score : " + e.getMessage());
+        }
     }
     private String terminerPartie() {
         StringBuilder res = new StringBuilder();
