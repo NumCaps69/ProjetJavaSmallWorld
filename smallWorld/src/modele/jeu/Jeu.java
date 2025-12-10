@@ -1,4 +1,9 @@
 package modele.jeu;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import modele.plateau.Plateau;
 import modele.plateau.Plateau2J;
@@ -73,13 +78,12 @@ public class Jeu extends Thread{
     public int getIndJoueur(){
         return indJoueur;
     }
-     public Joueur getJoueur(int index){
+    public Joueur getJoueur(int index){
         if(index>=0 && index<nb_joueur){
             return joueurs[index];
         }
         return null;
      }
-
      public int getTourActuel(){
         return tour;
      }
@@ -87,6 +91,17 @@ public class Jeu extends Thread{
     public int getTourMAX(){
         return MAXT;
     }
+
+    public void sauvegarderScore(int[] score) throws IOException {
+        String fichier = "Score.txt";
+        BufferedWriter EcritFichier = new BufferedWriter(new FileWriter(fichier, true));
+        EcritFichier.write(String.format(String.format("Partie du : " + DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(LocalDateTime.now()))));
+        for(int i = 0; i<score.length; i++){
+            EcritFichier.write("Joueur "+ i + " : " + score[i]);
+        }
+        EcritFichier.close();
+    }
+
 
     public void jouerPartie() {
         while (tour<=MAXT) {
